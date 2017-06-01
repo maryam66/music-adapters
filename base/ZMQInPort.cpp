@@ -1,7 +1,8 @@
 #include "ZMQInPort.h"
 
 
-ZMQInPort::ZMQInPort(char* port_name, int data_size)
+void
+ZMQInPort::init(MUSIC::Setup* setup, char* port_name, int data_size)
 {
 
     data = new double[data_size];

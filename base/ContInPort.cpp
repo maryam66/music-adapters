@@ -1,7 +1,8 @@
 #include "ContInPort.h"
 
 
-ContInPort::ContInPort(MUSIC::Setup* setup, char* port_name, int data_size)
+void 
+ContInPort::init(MUSIC::Setup* setup, char* port_name, int data_size)
 {
 
     port = setup->publishContInput(port_name);

@@ -6,16 +6,20 @@
 #include "InPort.h"
 #include "OutPort.h"
 
+#include "sys/time.h"
+
 
 #define DEBUG_OUTPUT false 
 
 const double DEFAULT_TIMESTEP = 1e-3;
+const double DEFAULT_STOPTIME = 1.;
 
+template<class InPort, class OutPort>
 class Adapter
 {
 
     public:
-        Adapter(InPort in, OutPort out, int argc, char** argv);
+        Adapter(int argc, char** argv);
         void finalize();
 
     private:

@@ -1,14 +1,15 @@
 #ifndef ZMQ_IN_PORT_H
 #define ZMQ_IN_PORT_H
 
+#include <music.hh>
 #include "zhelpers.hpp"
 
 #define DEBUG_OUTPUT false 
 
 class ZMQInPort{
     public:
-        ZMQInPort(char* port_name, int data_size);
         double* data; 
+        void init(MUSIC::Setup* setup, char* port_name, int data_size);
 
     private:
 

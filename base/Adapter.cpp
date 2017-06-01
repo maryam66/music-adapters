@@ -1,25 +1,25 @@
 #include "Adapter.h" 
 
 
-Adapter::Adapter(InPort in, OutPort out, int argc, char** argv){
+template <class InPort, class OutPort>
+Adapter<InPort, OutPort>::Adapter(int argc, char** argv){
     init(argc, argv);
     initMUSIC(argc, argv);
     runMUSIC();
 }
 
 
+template <class InPort, class OutPort>
 void
-ContContAdapter::initMUSIC(int argc, char** argv)
+Adapter<InPort, OutPort>::initMUSIC(int argc, char** argv)
 {
     timestep = DEFAULT_TIMESTEP;
+    stoptime = DEFAULT_STOPTIME;
 
     MUSIC::Setup* setup = new MUSIC::Setup (argc, argv);
 
     setup->config("stoptime", &stoptime);
     setup->config("music_timestep", &timestep);
-
-    port_in = setup->publishContInput("in");
-    port_out = setup->publishContOutput("out");
 
     comm = setup->communicator ();
     int rank = comm.Get_rank ();       
@@ -42,37 +42,19 @@ ContContAdapter::initMUSIC(int argc, char** argv)
         comm.Abort(1);
     }
 
-    data_in = new double[size_data_in];
-    for (int i = 0; i < size_data_in; ++i)
-    {
-        data_in[i] = 0.;
-    }
+    port_in = new InPort();
+    port_out = new OutPort();
 
-    data_out = new double[size_data_out];
-    for (int i = 0; i < size_data_out; ++i)
-    {
-        data_out[i] = 0.;
-    }
-
-    // Declare where in memory to put command_data
-    MUSIC::ArrayData dmap_in(data_in,
-      		 MPI::DOUBLE,
-      		 0,
-      		 size_data_in);
-    port_in->map (&dmap_in, 0., 1, false);
-    
-    MUSIC::ArrayData dmap_out(data_out,
-      		 MPI::DOUBLE,
-      		 0,
-      		 size_data_out);
-    port_out ->map (&dmap_out, 1);
+    port_in.init(setup, "in", size_data_in);
+    port_out.init(setup, "in", size_data_out);
 
     MPI::COMM_WORLD.Barrier();
     runtime = new MUSIC::Runtime (setup, timestep);
 }
 
+template <class InPort, class OutPort>
 void 
-ContContAdapter::runMUSIC()
+Adapter<InPort, OutPort>::runMUSIC()
 {
     std::cout << "running cont_cont adapter" << std::endl;
     
@@ -107,8 +89,10 @@ ContContAdapter::runMUSIC()
     std::cout << "cont_cont adapter: total simtime: " << dt_s << " " << dt_us << " ticks skipped " << ticks_skipped <<  std::endl;
 }
 
+
+template <class InPort, class OutPort>
 void
-ContContAdapter::finalize(){
+Adapter<InPort, OutPort>::finalize(){
     runtime->finalize();
     delete runtime;
 }

@@ -1,6 +1,7 @@
 #include "ZMQOutPort.h"
 
-ZMQOutPort::ZMQOutPort(char* port_name, int data_size)
+void
+ZMQOutPort::init(MUSIC::Setup* setup, char* port_name, int data_size)
 {
 
     data = new double[data_size];

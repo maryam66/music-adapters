@@ -1,7 +1,7 @@
 #include "ContOutPort.h"
 
-
-ContOutPort::ContOutPort(MUSIC::Setup* setup, char* port_name, int data_size)
+void
+ContOutPort::init(MUSIC::Setup* setup, char* port_name, int data_size)
 {
 
     port = setup->publishContOutput(port_name);
