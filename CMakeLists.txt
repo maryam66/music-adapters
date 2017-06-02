@@ -33,6 +33,8 @@ add_library(musicadapter STATIC base/Port.cpp
                                 base/OutPort.cpp
                                 base/ContInPort.cpp 
                                 base/ContOutPort.cpp
+                                base/EventInPort.cpp 
+                                base/EventOutPort.cpp
                                 base/ZMQInPort.cpp
                                 base/ZMQOutPort.cpp
                                 base/Adapter.cpp)
