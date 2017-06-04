@@ -2,16 +2,24 @@
 #define ZMQ_OUT_PORT_H
 
 #include <music.hh>
-#include "zhelpers.hpp"
+#include <zmq.hpp> // https://github.com/zeromq/cppzmq
+#include "OutPort.h"
 
 #define DEBUG_OUTPUT false 
 
-class ZMQOutPort{
+const std::string DEFAULT_ZMQ_ADDR = "tcp://localhost:5556";
+const std::string DEFAULT_ZMQ_TOPIC = "out";
+
+class ZMQOutPort : public OutPort
+{
+
     public:
         double* data; 
-        void init(MUSIC::Setup* setup, char* port_name, int data_size);
+        int data_size;
+        void init(MUSIC::Setup* setup, char* port_name);
 
     private:
+
         zmq::context_t *context;
         zmq::socket_t *publisher; 
 

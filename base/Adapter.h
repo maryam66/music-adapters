@@ -14,12 +14,12 @@
 const double DEFAULT_TIMESTEP = 1e-3;
 const double DEFAULT_STOPTIME = 1.;
 
-template<class InPort, class OutPort>
 class Adapter
 {
 
     public:
-        Adapter(int argc, char** argv);
+        void init(int argc, char** argv);
+        void run();
         void finalize();
 
     private:
@@ -32,14 +32,15 @@ class Adapter
         double* data_in;
         double* data_out;
 
-        InPort port_in;
-        OutPort port_out;
 
-        void initMUSIC(int argc, char** argv);
-        void runMUSIC();
+        //virtual void init(int argc, char** argv);
+        virtual void tick(){};
+    protected:
 
-        virtual void init(int argc, char** argv);
-        virtual void tick();};
+        InPort* port_in;
+        OutPort* port_out;
+
+};
 
 #endif // ADAPTER_H
 

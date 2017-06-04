@@ -6,9 +6,7 @@
 class Port 
 {
     public:
-        virtual void init(MUSIC::Setup* setup, char* port_name, int data_size);
-        virtual void tick();
-
+        virtual void init(MUSIC::Setup* setup, char* port_name) = 0;
 };
 
 #endif // ADAPTER_H

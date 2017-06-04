@@ -2,14 +2,21 @@
 #define ZMQ_IN_PORT_H
 
 #include <music.hh>
-#include "zhelpers.hpp"
+#include <zmq.hpp> // https://github.com/zeromq/cppzmq
+#include "InPort.h"
 
 #define DEBUG_OUTPUT false 
 
-class ZMQInPort{
+const std::string DEFAULT_ZMQ_ADDR = "tcp://localhost:5555";
+const std::string DEFAULT_ZMQ_TOPIC = "in";
+
+class ZMQInPort : public InPort
+{
+
     public:
         double* data; 
-        void init(MUSIC::Setup* setup, char* port_name, int data_size);
+        int data_size;
+        void init(MUSIC::Setup* setup, char* port_name);
 
     private:
 

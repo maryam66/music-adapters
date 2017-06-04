@@ -15,11 +15,13 @@ include_directories(
     ${MUSIC_INCLUDE_DIRS}
     ${JSONCPP_INCLUDE_DIRS}
     ${MPI_INCLUDE_PATH}
+    ${ZMQ_INCLUDE_DIRS}
 )
+
 
 set(CMAKE_CXX_COMPILE_FLAGS ${CMAKE_CXX_COMPILE_FLAGS} ${MPI_COMPILE_FLAGS})
 set(CMAKE_CXX_LINK_FLAGS ${CMAKE_CXX_LINK_FLAGS} ${MPI_LINK_FLAGS})
-set(CMAKE_CXX_FLAGS "-O3")
+set(CMAKE_CXX_FLAGS "-O3 -g -Wall")
 
 find_library(GSL gsl REQUIRED)
 find_library(BLAS gslcblas REQUIRED)
@@ -40,6 +42,10 @@ add_library(musicadapter STATIC base/Port.cpp
                                 base/Adapter.cpp)
 include_directories(base/)
 
+
+add_executable(zmq_cont_adapter adapters/ZMQContAdapter.cpp)
+add_executable(cont_zmq_adapter adapters/ContZMQAdapter.cpp)
+
 #add_executable(zmq_in_adapter adapters/zmq_in_adapter.cpp)
 #add_executable(zmq_out_adapter adapters/zmq_out_adapter.cpp)
 #add_executable(ros_command_adapter adapters/ros_command_adapter.cpp)
@@ -54,6 +60,10 @@ include_directories(base/)
 #add_executable(rate_encoder encoder/rate_encoder.cpp)
 #add_executable(poisson_encoder encoder/poisson_encoder.cpp)
 #
+
+target_link_libraries(zmq_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
+target_link_libraries(cont_zmq_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
+
 #target_link_libraries(zmq_in_adapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
 #target_link_libraries(zmq_out_adapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
 #target_link_libraries(ros_command_adapter ${catkin_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)

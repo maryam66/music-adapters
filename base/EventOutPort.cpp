@@ -1,7 +1,7 @@
 #include "EventOutPort.h"
 
 void
-EventOutPort::init(MUSIC::Setup* setup, char* port_name, int data_size)
+EventOutPort::init(MUSIC::Setup* setup, char* port_name)
 {
 
     port = setup->publishEventOutput(port_name);

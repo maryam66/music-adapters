@@ -2,7 +2,7 @@
 
 
 void 
-EventInPort::init(MUSIC::Setup* setup, char* port_name, int data_size)
+EventInPort::init(MUSIC::Setup* setup, char* port_name)
 {
 
     port = setup->publishEventInput(port_name);

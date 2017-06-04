@@ -5,7 +5,8 @@
 
 class InPort : Port 
 {
-
+    public:
+        virtual void init(MUSIC::Setup* setup, char* port_name) {};
 };
 
 #endif // ADAPTER_H

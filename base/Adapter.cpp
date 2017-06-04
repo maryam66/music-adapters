@@ -1,17 +1,15 @@
 #include "Adapter.h" 
 
 
-template <class InPort, class OutPort>
-Adapter<InPort, OutPort>::Adapter(int argc, char** argv){
-    init(argc, argv);
-    initMUSIC(argc, argv);
-    runMUSIC();
-}
+//Adapter::Adapter(){
+//    init(argc, argv);
+//    initMUSIC(argc, argv);
+//    runMUSIC();
+//}
 
 
-template <class InPort, class OutPort>
 void
-Adapter<InPort, OutPort>::initMUSIC(int argc, char** argv)
+Adapter::init(int argc, char** argv)
 {
     timestep = DEFAULT_TIMESTEP;
     stoptime = DEFAULT_STOPTIME;
@@ -30,33 +28,16 @@ Adapter<InPort, OutPort>::initMUSIC(int argc, char** argv)
         comm.Abort(1);
     }
 
-    // get dimensions of data
-    if (port_in->hasWidth() && port_out->hasWidth())
-    {
-        size_data_in = port_in->width();
-        size_data_out = port_out->width();
-    }
-    else
-    {
-        std::cout << "ERROR: Port-width not defined" << std::endl;
-        comm.Abort(1);
-    }
-
-    port_in = new InPort();
-    port_out = new OutPort();
-
-    port_in.init(setup, "in", size_data_in);
-    port_out.init(setup, "in", size_data_out);
+    port_in->init(setup, "in");
+    port_out->init(setup, "out");
 
     MPI::COMM_WORLD.Barrier();
     runtime = new MUSIC::Runtime (setup, timestep);
 }
 
-template <class InPort, class OutPort>
 void 
-Adapter<InPort, OutPort>::runMUSIC()
+Adapter::run()
 {
-    std::cout << "running cont_cont adapter" << std::endl;
     
     struct timeval start;
     struct timeval end;
@@ -69,7 +50,7 @@ Adapter<InPort, OutPort>::runMUSIC()
         tick();
        
 #if DEBUG_OUTPUT
-        std::cout << "ContCont Adapter: ";
+        std::cout << "Adapter: ";
         for (int i = 0; i < size_data_out; ++i)
         {
             std::cout << data_out[i] << " ";
@@ -86,13 +67,13 @@ Adapter<InPort, OutPort>::runMUSIC()
     {
         dt_us += 1000000;
     }
-    std::cout << "cont_cont adapter: total simtime: " << dt_s << " " << dt_us << " ticks skipped " << ticks_skipped <<  std::endl;
+    std::cout << "Adapter: total simtime: " << dt_s << " " << dt_us << " ticks skipped " << ticks_skipped <<  std::endl;
 }
 
 
-template <class InPort, class OutPort>
 void
-Adapter<InPort, OutPort>::finalize(){
+Adapter::finalize()
+{
     runtime->finalize();
     delete runtime;
 }

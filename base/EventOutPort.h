@@ -6,12 +6,12 @@
 
 #define DEBUG_OUTPUT false 
 
-const double DEFAULT_TIMESTEP = 1e-3;
 
-class EventOutPort : OutPort{
+class EventOutPort : public OutPort{
     public:
         double* data; 
-        void init(MUSIC::Setup* setup, char* port_name, int data_size);
+        int data_size;
+        void init(MUSIC::Setup* setup, char* port_name);
 
     private:
 
