@@ -7,7 +7,7 @@
 
 #define DEBUG_OUTPUT false 
 
-const std::string DEFAULT_ZMQ_ADDR = "tcp://localhost:5556";
+const std::string DEFAULT_ZMQ_ADDR = "tcp://127.0.0.1:5556";
 const std::string DEFAULT_ZMQ_TOPIC = "out";
 
 class ZMQOutPort : public OutPort
