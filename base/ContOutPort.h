@@ -10,7 +10,6 @@
 class ContOutPort : public OutPort{
     public:
         double* data; 
-        int data_size;
         void init(MUSIC::Setup* setup, char* port_name);
 
     private:

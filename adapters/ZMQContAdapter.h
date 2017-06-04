@@ -31,7 +31,6 @@ class ZMQContAdapter : public Adapter
         void tick();
 
     private:
-
         msg_types msg_type;
 
 };

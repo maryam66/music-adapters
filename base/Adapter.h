@@ -22,13 +22,14 @@ class Adapter
         void run();
         void finalize();
 
+        //int get_data_size_in() { return port_in->data_size; };
+        //int get_data_size_out() { return port_out->data_size; };
+
     private:
         MPI::Intracomm comm;
         MUSIC::Runtime* runtime;
         double stoptime;
         double timestep;
-        int size_data_in;
-        int size_data_out;
         double* data_in;
         double* data_out;
 

@@ -8,4 +8,4 @@ rtf=1.
     binary=../../bld_music-adapters/cont_zmq_adapter
     np=1
     args=
-input.out->output.in[1]
+input.out->output.in[3]

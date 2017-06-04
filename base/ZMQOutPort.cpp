@@ -14,7 +14,18 @@ ZMQOutPort::init(MUSIC::Setup* setup, char* port_name)
     publisher = new zmq::socket_t(*context, ZMQ_PUB);
 
     publisher->bind(DEFAULT_ZMQ_ADDR.c_str());
-    std::cout << "ZMQOut" << std::endl;
 
 }
+
+//  Convert string to 0MQ string and send to socket
+bool
+ZMQOutPort::send (const std::string & string) {
+
+    zmq::message_t message(string.size());
+    memcpy (message.data(), string.data(), string.size());
+
+    bool rc = publisher->send (message);
+    return (rc);
+}
+
 

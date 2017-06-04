@@ -10,7 +10,6 @@
 class EventInPort : public InPort, MUSIC::EventHandlerGlobalIndex{
     public:
         double* data;  
-        int data_size;
         void init(MUSIC::Setup* setup, char* port_name);
 
     private:

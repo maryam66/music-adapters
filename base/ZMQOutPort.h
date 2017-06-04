@@ -14,9 +14,9 @@ class ZMQOutPort : public OutPort
 {
 
     public:
-        double* data; 
-        int data_size;
+        //double* data; 
         void init(MUSIC::Setup* setup, char* port_name);
+        bool send(const std::string& string);
 
     private:
 

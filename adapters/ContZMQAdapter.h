@@ -19,10 +19,9 @@
 
 #define DEBUG_OUTPUT false 
 
-enum msg_types {ALEGrayScaleImage, FloatArray, GymObservation};
+enum msg_types {FloatArray, GymCommand};
 
-
-const msg_types DEFAULT_MESSAGE_TYPE = GymObservation;
+const msg_types DEFAULT_MESSAGE_TYPE = GymCommand;
 
 class ContZMQAdapter : public Adapter
 {
@@ -31,8 +30,8 @@ class ContZMQAdapter : public Adapter
         void tick();
 
     private:
-
         msg_types msg_type;
+        Json::FastWriter writer;
 
 };
 

@@ -29,12 +29,40 @@ ContZMQAdapter::ContZMQAdapter()
 {
     port_in = new ContInPort();
     port_out = new ZMQOutPort();
+
+    msg_type = DEFAULT_MESSAGE_TYPE;
 }
 
 
 void
 ContZMQAdapter::tick()
 {
-    std::cout << "ZMQCONT Tick called" << std::endl;
+
+    Json::Value json_data(Json::arrayValue);
+
+    if (msg_type == FloatArray){
+        
+        for (int i = 0; i < port_in->data_size; ++i){
+           json_data.append(Json::Value(static_cast<ContInPort*>(port_in)->data[i]));
+        }
+        
+
+    }
+    else if (msg_type == GymCommand){
+
+        struct timeval now_;
+        gettimeofday(&now_, NULL);
+        double ts_now = now_.tv_sec + now_.tv_usec/1000000.;
+        
+        for (unsigned int i = 0; i < port_in->data_size; ++i){
+            Json::Value val;
+            val["value"] = static_cast<ContInPort*>(port_in)->data[i];
+            val["ts"] = ts_now;
+            json_data.append(val);
+        }
+    }
+   static_cast<ZMQOutPort*>(port_out)->send (writer.write(json_data));
+
 }
+
 

@@ -16,8 +16,31 @@ ZMQInPort::init(MUSIC::Setup* setup, char* port_name)
 
     subscriber->connect(DEFAULT_ZMQ_ADDR.c_str());
     subscriber->setsockopt(ZMQ_SUBSCRIBE, "", 0);
-    std::cout << "ZMQIn" << std::endl;
-
 
 }
 
+//  Receive 0MQ string from socket and convert into string
+std::string
+ZMQInPort::recv () {
+
+    zmq::message_t message;
+    subscriber->recv(&message);
+
+    return std::string(static_cast<char*>(message.data()), message.size());
+}
+
+Json::Value
+ZMQInPort::recvAsJson()
+{
+
+  std::string message = recv();
+
+  Json::Reader json_reader;
+  Json::Value json_msg; 
+  if ( !json_reader.parse(message, json_msg))
+  {
+      std::cout << "ERROR WHILE PARSING JSON" << std::endl;
+  }
+  return json_msg;
+    
+}
