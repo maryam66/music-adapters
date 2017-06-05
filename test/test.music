@@ -4,8 +4,13 @@ rtf=1.
     binary=../../bld_music-adapters/zmq_cont_adapter
     np=1
     args=
+[discretize]
+    binary=../../bld_music-adapters/discretize_adapter
+    np=1
+    args=
 [output]
     binary=../../bld_music-adapters/cont_zmq_adapter
     np=1
     args=
-input.out->output.in[3]
+input.out->discretize.in[3]
+discretize.out->output.in[125]

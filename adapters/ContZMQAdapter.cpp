@@ -30,6 +30,7 @@ ContZMQAdapter::ContZMQAdapter()
     port_in = new ContInPort();
     port_out = new ZMQOutPort();
 
+
     msg_type = DEFAULT_MESSAGE_TYPE;
 }
 
@@ -43,7 +44,7 @@ ContZMQAdapter::tick()
     if (msg_type == FloatArray){
         
         for (int i = 0; i < port_in->data_size; ++i){
-           json_data.append(Json::Value(static_cast<ContInPort*>(port_in)->data[i]));
+           json_data.append(Json::Value(port_in->data[i]));
         }
         
 
@@ -56,7 +57,7 @@ ContZMQAdapter::tick()
         
         for (unsigned int i = 0; i < port_in->data_size; ++i){
             Json::Value val;
-            val["value"] = static_cast<ContInPort*>(port_in)->data[i];
+            val["value"] = port_in->data[i];
             val["ts"] = ts_now;
             json_data.append(val);
         }

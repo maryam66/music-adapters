@@ -30,8 +30,6 @@ class Adapter
         MUSIC::Runtime* runtime;
         double stoptime;
         double timestep;
-        double* data_in;
-        double* data_out;
 
 
         //virtual void init(int argc, char** argv);

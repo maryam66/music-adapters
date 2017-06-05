@@ -11,6 +11,7 @@ ContInPort::init(MUSIC::Setup* setup, char* port_name)
     if (port->hasWidth())
     {
         data_size = port->width();
+        std::cout << "CONT IN " << data_size << std::endl;
     }
     else
     {

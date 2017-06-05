@@ -9,7 +9,6 @@
 
 class ContInPort : public InPort{
     public:
-        double* data;  
         void init(MUSIC::Setup* setup, char* port_name);
 
     private:

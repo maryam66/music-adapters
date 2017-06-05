@@ -66,8 +66,8 @@ ZMQContAdapter::tick()
         Json::Value::iterator it = json_msg.begin();
         while (it != json_msg.end()){
             Json::Value v = (*it);
-            std::cout << "ZMQ Cont tick " << v << static_cast<ContOutPort*>(port_out)->data[i] << std::endl;
-            static_cast<ContOutPort*>(port_out)->data[i] = 2 * (v["value"].asFloat() - v["min"].asFloat()) / 
+            //std::cout << "ZMQ Cont tick " << v << static_cast<ContOutPort*>(port_out)->data[i] << std::endl;
+            port_out->data[i] = 2 * (v["value"].asFloat() - v["min"].asFloat()) / 
                       ((v["max"].asFloat() - v["min"].asFloat())) - 1;
 
             double t_diff = ts_now - v["ts"].asDouble();
@@ -85,14 +85,15 @@ ZMQContAdapter::tick()
     }
         
 #if DEBUG_OUTPUT
-   for (int i = 0; i < datasize; ++i)
+    std::cout << " ZMQ CONT OUTPUT: " << std::endl; 
+    for (int i = 0; i < port_out->data_size; ++i)
     {
-        std::cout << data[i] << " ";
+        std::cout << port_out->data[i] << " ";
     }
     std::cout << std::endl;
 #endif
 
 
-    std::cout << "ZMQCONT Tick called " << json_msg << std::endl;
+    //std::cout << "ZMQCONT Tick called " << json_msg << std::endl;
 }
 

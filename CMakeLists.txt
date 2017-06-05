@@ -45,6 +45,7 @@ include_directories(base/)
 
 add_executable(zmq_cont_adapter adapters/ZMQContAdapter.cpp)
 add_executable(cont_zmq_adapter adapters/ContZMQAdapter.cpp)
+add_executable(discretize_adapter adapters/DiscretizeAdapter.cpp)
 
 #add_executable(zmq_in_adapter adapters/zmq_in_adapter.cpp)
 #add_executable(zmq_out_adapter adapters/zmq_out_adapter.cpp)
@@ -63,6 +64,7 @@ add_executable(cont_zmq_adapter adapters/ContZMQAdapter.cpp)
 
 target_link_libraries(zmq_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
 target_link_libraries(cont_zmq_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
+target_link_libraries(discretize_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
 
 #target_link_libraries(zmq_in_adapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
 #target_link_libraries(zmq_out_adapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
