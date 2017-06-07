@@ -27,6 +27,7 @@ class ContZMQAdapter : public Adapter
 {
     public:
         ContZMQAdapter();
+        void init(int argc, char** argv);
         void tick();
 
     private:

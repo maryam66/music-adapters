@@ -34,6 +34,13 @@ ContZMQAdapter::ContZMQAdapter()
     msg_type = DEFAULT_MESSAGE_TYPE;
 }
 
+void ContZMQAdapter::init(int argc, char** argv)
+{
+    Adapter::init(argc, argv);
+
+    // config needed for this specific adapter
+    
+}
 
 void
 ContZMQAdapter::tick()

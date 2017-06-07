@@ -34,6 +34,14 @@ ZMQContAdapter::ZMQContAdapter()
 
 }
 
+void ZMQContAdapter::init(int argc, char** argv)
+{
+
+    Adapter::init(argc, argv);
+
+    // config needed for this specific adapter
+    
+}
 
 void
 ZMQContAdapter::tick()

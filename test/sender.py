@@ -6,7 +6,7 @@ import numpy as np
 ctx = zmq.Context()
 
 pub = ctx.socket (zmq.PUB)
-pub.bind ("tcp://*:5555")
+pub.bind ("tcp://*:4555")
 
 i = 0
 

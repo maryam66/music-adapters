@@ -28,6 +28,7 @@ class ZMQContAdapter : public Adapter
 {
     public:
         ZMQContAdapter();
+        void init(int argc, char** argv);
         void tick();
 
     private:

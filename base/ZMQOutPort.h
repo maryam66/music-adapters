@@ -14,14 +14,13 @@ class ZMQOutPort : public OutPort
 {
 
     public:
-        //double* data; 
         void init(MUSIC::Setup* setup, char* port_name);
         bool send(const std::string& string);
 
     private:
-
         zmq::context_t *context;
         zmq::socket_t *publisher; 
+        std::string zmq_addr;
 
 };
 

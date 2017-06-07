@@ -16,16 +16,15 @@ class ZMQInPort : public InPort
 {
 
     public:
-        //double* data; 
         void init(MUSIC::Setup* setup, char* port_name);
 
         std::string recv();
         Json::Value recvAsJson();
 
     private:
-
         zmq::context_t *context;
         zmq::socket_t *subscriber; 
+        std::string zmq_addr;
 
 };
 
