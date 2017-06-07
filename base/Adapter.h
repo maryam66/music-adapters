@@ -18,6 +18,8 @@ class Adapter
 {
 
     public:
+        MUSIC::Setup* setup;
+
         void init(int argc, char** argv);
         void run();
         void finalize();

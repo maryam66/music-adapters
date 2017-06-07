@@ -7,8 +7,6 @@ main(int argc, char** argv)
     DiscretizeAdapter* adapter = new DiscretizeAdapter();
     adapter->init(argc, argv);
 
-    adapter->readGridPositionFile();
-
     adapter->run();
     
     adapter->finalize();
@@ -18,9 +16,24 @@ DiscretizeAdapter::DiscretizeAdapter()
 {
     port_in = new ContInPort();
     port_out = new ContOutPort();
+}
 
+void DiscretizeAdapter::init(int argc, char** argv)
+{
     grid_positions_filename = DEFAULT_GRID_POSITIONS_FILENAME;
 
+    Adapter::init(argc, argv);
+
+    // config needed for this specific adapter
+
+    setup->config("grid_positions_filename", &grid_positions_filename);
+    
+    double tmp; 
+    setup->config("stoptime", &tmp);
+
+    std::cout << "SDDSFDS " << tmp << std::endl;
+
+    readGridPositionFile();
 }
 
 

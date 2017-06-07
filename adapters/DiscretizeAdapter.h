@@ -27,6 +27,7 @@ class DiscretizeAdapter : public Adapter
 {
     public:
         DiscretizeAdapter();
+        void init(int argc, char** argv);
         void tick();
         
         void readGridPositionFile();
@@ -36,6 +37,7 @@ class DiscretizeAdapter : public Adapter
         Json::Value json_grid_positions; 
         std::map<int, double*> grid_positions;
         std::map<int, double*> sigmas;
+
 
 
 

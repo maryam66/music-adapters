@@ -14,7 +14,7 @@ Adapter::init(int argc, char** argv)
     timestep = DEFAULT_TIMESTEP;
     stoptime = DEFAULT_STOPTIME;
 
-    MUSIC::Setup* setup = new MUSIC::Setup (argc, argv);
+    setup = new MUSIC::Setup (argc, argv);
 
     setup->config("stoptime", &stoptime);
     setup->config("music_timestep", &timestep);
@@ -31,14 +31,15 @@ Adapter::init(int argc, char** argv)
     port_in->init(setup, "in");
     port_out->init(setup, "out");
 
-    MPI::COMM_WORLD.Barrier();
-    runtime = new MUSIC::Runtime (setup, timestep);
 }
 
 void 
 Adapter::run()
 {
     
+    MPI::COMM_WORLD.Barrier();
+    runtime = new MUSIC::Runtime (setup, timestep);
+
     struct timeval start;
     struct timeval end;
     gettimeofday(&start, NULL);

@@ -8,6 +8,7 @@ rtf=1.
     binary=../../bld_music-adapters/discretize_adapter
     np=1
     args=
+    grid_positions_filename=grid_pos.json
 [output]
     binary=../../bld_music-adapters/cont_zmq_adapter
     np=1
