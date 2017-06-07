@@ -1,11 +1,17 @@
 #include "Adapter.h" 
 
 
-//Adapter::Adapter(){
-//    init(argc, argv);
-//    initMUSIC(argc, argv);
-//    runMUSIC();
-//}
+static void*
+asyncThread(void* arg)
+{
+    Adapter* adapter = static_cast<Adapter*>(arg);
+  
+    for (int t = 0; adapter->runtime->time() < adapter->stoptime; t++)
+    {
+        adapter->asyncTick();
+    }
+
+}
 
 
 void
@@ -13,11 +19,13 @@ Adapter::init(int argc, char** argv)
 {
     timestep = DEFAULT_TIMESTEP;
     stoptime = DEFAULT_STOPTIME;
+    rtf = DEFAULT_RTF;
 
     setup = new MUSIC::Setup (argc, argv);
 
     setup->config("stoptime", &stoptime);
     setup->config("music_timestep", &timestep);
+    setup->config("rtf", &rtf);
 
     comm = setup->communicator ();
     int rank = comm.Get_rank ();       
@@ -34,12 +42,19 @@ Adapter::init(int argc, char** argv)
 }
 
 void 
-Adapter::run()
+Adapter::run(bool threaded)
 {
-    
+
+    RTClock clock( timestep / rtf );
+
     MPI::COMM_WORLD.Barrier();
     runtime = new MUSIC::Runtime (setup, timestep);
 
+    if (threaded)
+    {
+        pthread_create (&thread, NULL, asyncThread, this);
+    }
+    
     struct timeval start;
     struct timeval end;
     gettimeofday(&start, NULL);
@@ -58,9 +73,15 @@ Adapter::run()
         }
         std::cout << std::endl;
 #endif
+        clock.sleepNext(); 
         runtime->tick();
     }
 
+    if (threaded)
+    {
+        pthread_join(thread, NULL);
+    }
+    
     gettimeofday(&end, NULL);
     unsigned int dt_s = end.tv_sec - start.tv_sec;
     unsigned int dt_us = end.tv_usec - start.tv_usec;
@@ -70,6 +91,8 @@ Adapter::run()
     }
     std::cout << "Adapter: total simtime: " << dt_s << " " << dt_us << " ticks skipped " << ticks_skipped <<  std::endl;
 }
+
+
 
 
 void

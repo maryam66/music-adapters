@@ -1,10 +1,10 @@
-stoptime=1.
+stoptime=10.
 rtf=1.
 [input]
     binary=../../bld_music-adapters/zmq_cont_adapter
     np=1
     args=
-    zmq_addr=tcp://localhost:4655
+    zmq_addr=tcp://localhost:4555
 [discretize]
     binary=../../bld_music-adapters/discretize_adapter
     np=1

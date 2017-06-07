@@ -7,7 +7,7 @@ main(int argc, char** argv)
     DiscretizeAdapter* adapter = new DiscretizeAdapter();
     adapter->init(argc, argv);
 
-    adapter->run();
+    adapter->run(false);
     
     adapter->finalize();
 }

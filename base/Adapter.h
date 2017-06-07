@@ -7,35 +7,37 @@
 #include "OutPort.h"
 
 #include "sys/time.h"
-
+#include "rtclock.h"
 
 #define DEBUG_OUTPUT false 
 
 const double DEFAULT_TIMESTEP = 1e-3;
 const double DEFAULT_STOPTIME = 1.;
+const double DEFAULT_RTF = 1.;
 
 class Adapter
 {
 
     public:
         MUSIC::Setup* setup;
+        MUSIC::Runtime* runtime;
+        
+        double stoptime;
 
         void init(int argc, char** argv);
-        void run();
+        void run(bool threaded);
+        virtual void tick(){};
+        virtual void asyncTick(){};
         void finalize();
 
-        //int get_data_size_in() { return port_in->data_size; };
-        //int get_data_size_out() { return port_out->data_size; };
 
     private:
         MPI::Intracomm comm;
-        MUSIC::Runtime* runtime;
-        double stoptime;
         double timestep;
+        double rtf;
 
+        pthread_t thread;
 
-        //virtual void init(int argc, char** argv);
-        virtual void tick(){};
     protected:
 
         InPort* port_in;

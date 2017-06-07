@@ -18,7 +18,7 @@ main(int argc, char** argv)
 
     //pthread_t t;
     //pthread_create (&t, NULL, zmq_thread, &zmq_cont_adapter);
-    adapter->run();
+    adapter->run(false);
 
     //pthread_join(t, NULL);
     

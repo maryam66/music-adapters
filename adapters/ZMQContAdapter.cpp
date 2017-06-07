@@ -1,14 +1,5 @@
 #include "ZMQContAdapter.h"
 
-
-static void*
-zmq_thread(void* arg)
-{
-  //ZMQContAdapter* zmq_cont_adapter = static_cast<ZMQContAdapter*>(arg);
-  //zmq_cont_adapter->runZMQ();
-}
-
-
 int
 main(int argc, char** argv)
 {
@@ -16,11 +7,8 @@ main(int argc, char** argv)
     ZMQContAdapter* adapter = new ZMQContAdapter();
     adapter->init(argc, argv);
 
-    //pthread_t t;
-    //pthread_create (&t, NULL, zmq_thread, &zmq_cont_adapter);
-    adapter->run();
+    adapter->run(true);
 
-    //pthread_join(t, NULL);
     
     adapter->finalize();
 }
@@ -46,6 +34,15 @@ void ZMQContAdapter::init(int argc, char** argv)
 void
 ZMQContAdapter::tick()
 {
+    //std::cout << "ZYNC TICK" << std::endl;
+}
+
+void
+ZMQContAdapter::asyncTick()
+{
+
+    std::cout << "RECV ASYNC" << std::endl;
+
     Json::Value json_msg = static_cast<ZMQInPort*>(port_in)->recvAsJson();
 
     if (msg_type == ALEGrayScaleImage){

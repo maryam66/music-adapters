@@ -30,6 +30,7 @@ class ZMQContAdapter : public Adapter
         ZMQContAdapter();
         void init(int argc, char** argv);
         void tick();
+        void asyncTick();
 
     private:
         msg_types msg_type;
