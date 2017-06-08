@@ -7,7 +7,7 @@ Software dependencies
 =====================
 
 - CMake
-- `MUSIC <https://github.com/INCF/MUSIC>`
+- `MUSIC <https://github.com/INCF/MUSIC>`_
 - OpenMPI
 - pthread
 
