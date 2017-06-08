@@ -16,13 +16,12 @@ ContZMQAdapter::ContZMQAdapter()
 {
     port_in = new ContInPort();
     port_out = new ZMQOutPort();
-
-
-    msg_type = DEFAULT_MESSAGE_TYPE;
 }
 
 void ContZMQAdapter::init(int argc, char** argv)
 {
+    msg_type = DEFAULT_MESSAGE_TYPE;
+
     Adapter::init(argc, argv);
 
     // config needed for this specific adapter

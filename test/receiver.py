@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import zmq
 
 ctx = zmq.Context()

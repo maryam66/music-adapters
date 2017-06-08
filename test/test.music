@@ -22,4 +22,4 @@ rtf=1.
     zmq_addr=tcp://*:5559
 input.out->connect.in[3]
 connect.out->discretize.in[3]
-discretize.out->output.in[125]
+discretize.out->output.in[8]
