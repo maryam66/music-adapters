@@ -7,7 +7,7 @@ Software dependencies
 =====================
 
 - CMake
-- `MUSIC (https://github.com/INCF/MUSIC)`
+- `MUSIC <https://github.com/INCF/MUSIC>`
 - OpenMPI
 - pthread
 
@@ -20,6 +20,7 @@ Optional dependencies
 Installation
 ============
 .. code:: bash
+
   cmake -DCMAKE_INSTALL_PREFIX:PATH=<PREFIX> <music-adapters_SOURCE>
   make
 
