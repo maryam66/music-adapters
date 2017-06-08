@@ -1,7 +1,7 @@
 import numpy as np
 import json
 
-n = 5
+n = 2
 
 pos = []
 

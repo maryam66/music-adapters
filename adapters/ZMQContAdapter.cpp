@@ -18,12 +18,11 @@ ZMQContAdapter::ZMQContAdapter()
     port_in = new ZMQInPort();
     port_out = new ContOutPort();
 
-    msg_type = DEFAULT_MESSAGE_TYPE;
-
 }
 
 void ZMQContAdapter::init(int argc, char** argv)
 {
+    msg_type = DEFAULT_MESSAGE_TYPE;
 
     Adapter::init(argc, argv);
 

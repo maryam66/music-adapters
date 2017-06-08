@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import zmq
 import time
 import json
