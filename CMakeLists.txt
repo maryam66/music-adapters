@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 
-project("ros_music_adapters")
+project(music-adapters CXX C)
 
 # add modules for finding JSONCPP, ZMQ and MUSIC
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules")
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
 find_package(MUSIC REQUIRED)
 find_package(JSONCPP REQUIRED)
@@ -107,3 +107,8 @@ target_link_libraries(cont_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LI
 
 
 
+################################################################################
+##################              Enable testing                ##################
+################################################################################
+enable_testing()
+add_test(NAME TestZMQ WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/test/test_zmq_adapter COMMAND test.sh)
