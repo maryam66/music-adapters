@@ -24,4 +24,4 @@ Installation
   cmake -DCMAKE_INSTALL_PREFIX:PATH=<PREFIX> <music-adapters_SOURCE>
   make
 
-If MUSIC is not found you can provide the MUSIC root path by specifying ``-DMUSIC_ROOT_DIR=$PWD/../MUSIC.install/``.
+If MUSIC is not found you can provide the MUSIC root path by specifying ``-DMUSIC_ROOT_DIR=<MUSIC_INSTALL_DIR>``.
