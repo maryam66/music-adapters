@@ -18,9 +18,6 @@
 #include "jsoncpp/json/json.h"
 #include <fstream>
 
-#define DEBUG_OUTPUT false 
-
-
 const string DEFAULT_GRID_POSITIONS_FILENAME = "grid_positions.json";
 
 class DiscretizeAdapter : public Adapter
@@ -30,7 +27,6 @@ class DiscretizeAdapter : public Adapter
         void init(int argc, char** argv);
         void tick();
         
-        void readGridPositionFile();
 
     private:
         string grid_positions_filename;
@@ -38,8 +34,7 @@ class DiscretizeAdapter : public Adapter
         std::map<int, double*> grid_positions;
         std::map<int, double*> sigmas;
 
-
-
+        void readGridPositionFile();
 
 };
 

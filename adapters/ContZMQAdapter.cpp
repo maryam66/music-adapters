@@ -1,14 +1,5 @@
 #include "ContZMQAdapter.h"
 
-
-static void*
-zmq_thread(void* arg)
-{
-  //ContZMQAdapter* zmq_cont_adapter = static_cast<ContZMQAdapter*>(arg);
-  //zmq_cont_adapter->runZMQ();
-}
-
-
 int
 main(int argc, char** argv)
 {
@@ -16,11 +7,7 @@ main(int argc, char** argv)
     ContZMQAdapter* adapter = new ContZMQAdapter();
     adapter->init(argc, argv);
 
-    //pthread_t t;
-    //pthread_create (&t, NULL, zmq_thread, &zmq_cont_adapter);
     adapter->run(false);
-
-    //pthread_join(t, NULL);
     
     adapter->finalize();
 }
@@ -62,7 +49,7 @@ ContZMQAdapter::tick()
         gettimeofday(&now_, NULL);
         double ts_now = now_.tv_sec + now_.tv_usec/1000000.;
         
-        for (unsigned int i = 0; i < port_in->data_size; ++i){
+        for (int i = 0; i < port_in->data_size; ++i){
             Json::Value val;
             val["value"] = port_in->data[i];
             val["ts"] = ts_now;

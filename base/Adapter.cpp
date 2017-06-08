@@ -11,6 +11,7 @@ asyncThread(void* arg)
         adapter->asyncTick();
     }
 
+    return 0;
 }
 
 
@@ -28,7 +29,7 @@ Adapter::init(int argc, char** argv)
     setup->config("rtf", &rtf);
 
     comm = setup->communicator ();
-    int rank = comm.Get_rank ();       
+    //int rank = comm.Get_rank ();       
     int nProcesses = comm.Get_size (); 
     if (nProcesses > 1)
     {

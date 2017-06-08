@@ -34,15 +34,11 @@ void ZMQContAdapter::init(int argc, char** argv)
 void
 ZMQContAdapter::tick()
 {
-    //std::cout << "ZYNC TICK" << std::endl;
 }
 
 void
 ZMQContAdapter::asyncTick()
 {
-
-    std::cout << "RECV ASYNC" << std::endl;
-
     Json::Value json_msg = static_cast<ZMQInPort*>(port_in)->recvAsJson();
 
     if (msg_type == ALEGrayScaleImage){
@@ -71,7 +67,6 @@ ZMQContAdapter::asyncTick()
         Json::Value::iterator it = json_msg.begin();
         while (it != json_msg.end()){
             Json::Value v = (*it);
-            //std::cout << "ZMQ Cont tick " << v << static_cast<ContOutPort*>(port_out)->data[i] << std::endl;
             port_out->data[i] = 2 * (v["value"].asFloat() - v["min"].asFloat()) / 
                       ((v["max"].asFloat() - v["min"].asFloat())) - 1;
 
@@ -80,25 +75,10 @@ ZMQContAdapter::asyncTick()
                 std::cout << "WARNING: ZMQ_in_adapter " << " might be out of sync" << std::endl;
             }
 
-#if DEBUG_OUTPUT
-            std::cout << v  << std::endl;
-#endif
             ++it;
             ++i;
         }
 
     }
-        
-#if DEBUG_OUTPUT
-    std::cout << " ZMQ CONT OUTPUT: " << std::endl; 
-    for (int i = 0; i < port_out->data_size; ++i)
-    {
-        std::cout << port_out->data[i] << " ";
-    }
-    std::cout << std::endl;
-#endif
-
-
-    //std::cout << "ZMQCONT Tick called " << json_msg << std::endl;
 }
 

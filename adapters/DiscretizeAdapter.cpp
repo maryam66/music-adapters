@@ -45,17 +45,6 @@ DiscretizeAdapter::tick()
         // calculate activation in respect to gaussion kernel
         port_out->data[i] = -1. + 2. * std::exp(-tmp_/2.);
     }
-   
-       
-#if DEBUG_OUTPUT
-    std::cout << "Discretize Adapter: ";
-    for (int i = 0; i < size_data_out; ++i)
-    {
-        std::cout << data_out[i] << " ";
-    }
-    std::cout << std::endl;
-#endif
-
 }
 
 
@@ -87,19 +76,17 @@ DiscretizeAdapter::readGridPositionFile()
     else
     {
 
-            std::cout << "read grid file " << static_cast<ContOutPort*>(port_out)->data_size << std::endl;
-        for (int i = 0; i < static_cast<ContOutPort*>(port_out)->data_size; ++i)
+        for (int i = 0; i < port_out->data_size; ++i)
         {
-            double* pos_ = new double[static_cast<ContInPort*>(port_in)->data_size];
-            double* sigmas_ = new double[static_cast<ContInPort*>(port_in)->data_size];
+            double* pos_ = new double[port_in->data_size];
+            double* sigmas_ = new double[port_in->data_size];
 
-            for (int j = 0; j < static_cast<ContInPort*>(port_in)->data_size; ++j)
+            for (int j = 0; j < port_in->data_size; ++j)
             {
                 pos_[j] = json_grid_positions[i][j].asDouble();
                
                 //put sigmas on the diagonal
-                sigmas_[j] = json_grid_positions[i][static_cast<ContInPort*>(port_in)->data_size + j].asDouble(); 
-                std::cout << "discretize " << pos_[j] << " " << sigmas_[j] << std::endl;
+                sigmas_[j] = json_grid_positions[i][port_in->data_size + j].asDouble(); 
             }
             grid_positions.insert(std::pair<int, double*>(i, pos_));
             sigmas.insert(std::pair<int, double*>(i, sigmas_));

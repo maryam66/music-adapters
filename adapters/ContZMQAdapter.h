@@ -17,8 +17,6 @@
 #include <iostream>
 #include "jsoncpp/json/json.h"
 
-#define DEBUG_OUTPUT false 
-
 enum msg_types {FloatArray, GymCommand};
 
 const msg_types DEFAULT_MESSAGE_TYPE = GymCommand;

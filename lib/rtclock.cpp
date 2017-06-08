@@ -55,7 +55,7 @@ void
 RTClock::sleepNext ()
 {
   timeradd (&last_, &interval_, &last_);
-  struct timespec req = timespecFromTimeval (last_);
+  struct timespec req; // = timespecFromTimeval (last_);
   req.tv_sec = last_.tv_sec;
   req.tv_nsec = 1000 * last_.tv_usec;
   clock_nanosleep (CLOCK_REALTIME, TIMER_ABSTIME, &req, NULL);
@@ -66,6 +66,6 @@ RTClock::sleepUntil (double t) const
 {
   struct timeval goal = timevalFromSeconds (t);
   timeradd (&start_, &goal, &goal);
-  struct timespec req = timespecFromTimeval (goal);
+  struct timespec req; // = timespecFromTimeval (goal);
   clock_nanosleep (CLOCK_REALTIME, TIMER_ABSTIME, &req, NULL);
 }
