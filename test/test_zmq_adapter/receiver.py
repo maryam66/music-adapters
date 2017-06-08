@@ -8,12 +8,14 @@ sub.connect('tcp://localhost:5559')
 
 sub.setsockopt(zmq.SUBSCRIBE, '')
 
-t_max = 0.5
+t_max = 0.8
 t = 0
 
 while t < t_max:
     message = json.loads(sub.recv())
+    print message
     t = message[0]['value']
-    print t, 'recv', message[0]
+    assert(len(message) == 3), exit(1)  # message should have length three, as defined in MUSIC config
+    assert((t > -1.) and (t < 1.)), exit(1)  # received values should be scaled to [-1, 1]
 
-print 'exit'
+exit(0)
