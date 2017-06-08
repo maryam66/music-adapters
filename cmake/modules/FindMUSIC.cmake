@@ -6,9 +6,9 @@
 
 find_package(PkgConfig)
 
-find_path(MUSIC_INCLUDE_DIR NAMES music.hh)
+find_path(MUSIC_INCLUDE_DIR NAMES music.hh HINTS ${MUSIC_ROOT_DIR}/include)
 
-find_library(MUSIC_LIBRARY NAMES libmusic.so)
+find_library(MUSIC_LIBRARY NAMES libmusic.so HINTS ${MUSIC_ROOT_DIR}/lib)
 
 include(FindPackageHandleStandardArgs)
 # handle the QUIETLY and REQUIRED arguments and set MUSIC_FOUND to TRUE
