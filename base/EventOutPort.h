@@ -10,6 +10,7 @@
 class EventOutPort : public OutPort{
     public:
         void init(MUSIC::Setup* setup, char* port_name);
+        void send(int n, double t);
 
     private:
 

@@ -23,3 +23,6 @@ EventInPort::init(MUSIC::Setup* setup, char* port_name)
     port->map(&l_index, this, 0.0, 1); //TODO acceptable latency of 0. Does that work? 
 }
 
+void EventInPort::operator () (double t, MUSIC::GlobalIndex id){
+    spikes.push (Event (t, id)); //TODO add acceptable latency to t?
+}

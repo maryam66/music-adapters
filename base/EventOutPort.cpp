@@ -22,3 +22,9 @@ EventOutPort::init(MUSIC::Setup* setup, char* port_name)
     port->map(&l_index, MUSIC::Index::GLOBAL, 1);
 }
 
+void
+EventOutPort::send(int n, double t)
+{
+    port->insertEvent(t, MUSIC::GlobalIndex(n));
+}
+

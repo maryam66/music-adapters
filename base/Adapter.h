@@ -23,6 +23,7 @@ class Adapter
         MUSIC::Runtime* runtime;
         
         double stoptime;
+        double timestep;
 
         void init(int argc, char** argv);
         void run(bool threaded);
@@ -33,7 +34,6 @@ class Adapter
 
     private:
         MPI::Intracomm comm;
-        double timestep;
         double rtf;
 
         pthread_t thread;

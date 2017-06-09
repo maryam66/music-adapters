@@ -43,12 +43,34 @@ add_library(musicadapter STATIC base/Port.cpp
 include_directories(base/)
 
 
+# Adapters
 add_executable(zmq_cont_adapter adapters/ZMQContAdapter.cpp)
 add_executable(cont_zmq_adapter adapters/ContZMQAdapter.cpp)
 add_executable(discretize_adapter adapters/DiscretizeAdapter.cpp)
 add_executable(argmax_adapter adapters/ArgmaxAdapter.cpp)
 add_executable(cont_cont_adapter adapters/ContContAdapter.cpp)
 add_executable(threshold_adapter adapters/ThresholdAdapter.cpp)
+
+target_link_libraries(zmq_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
+target_link_libraries(cont_zmq_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
+target_link_libraries(discretize_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
+target_link_libraries(argmax_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
+target_link_libraries(cont_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS} rtclock)
+target_link_libraries(threshold_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS} rtclock)
+
+
+# Encoders
+add_executable(rate_encoder encoder/RateEncoder.cpp)
+
+target_link_libraries(rate_encoder musicadapter ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} rtclock)
+
+
+
+# Decoders 
+add_executable(linear_decoder decoder/LinearDecoder.cpp)
+
+target_link_libraries(linear_decoder musicadapter ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} rtclock)
+
 
 #add_executable(zmq_in_adapter adapters/zmq_in_adapter.cpp)
 #add_executable(zmq_out_adapter adapters/zmq_out_adapter.cpp)
@@ -64,14 +86,6 @@ add_executable(threshold_adapter adapters/ThresholdAdapter.cpp)
 #add_executable(rate_encoder encoder/rate_encoder.cpp)
 #add_executable(poisson_encoder encoder/poisson_encoder.cpp)
 #
-
-target_link_libraries(zmq_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
-target_link_libraries(cont_zmq_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
-target_link_libraries(discretize_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
-target_link_libraries(argmax_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
-target_link_libraries(cont_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS} rtclock)
-target_link_libraries(threshold_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS} rtclock)
-
 #target_link_libraries(zmq_in_adapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
 #target_link_libraries(zmq_out_adapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
 #target_link_libraries(ros_command_adapter ${catkin_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} rtclock)
