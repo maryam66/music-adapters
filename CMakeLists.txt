@@ -39,7 +39,8 @@ add_library(musicadapter STATIC base/Port.cpp
                                 base/EventOutPort.cpp
                                 base/ZMQInPort.cpp
                                 base/ZMQOutPort.cpp
-                                base/Adapter.cpp)
+                                base/Adapter.cpp
+                                base/IAFNeuron.cpp)
 include_directories(base/)
 
 
@@ -61,8 +62,12 @@ target_link_libraries(threshold_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LI
 
 # Encoders
 add_executable(rate_encoder encoder/RateEncoder.cpp)
+add_executable(poisson_encoder encoder/PoissonEncoder.cpp)
+add_executable(nef_encoder encoder/NefEncoder.cpp)
 
 target_link_libraries(rate_encoder musicadapter ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} rtclock)
+target_link_libraries(poisson_encoder musicadapter ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} rtclock)
+target_link_libraries(nef_encoder musicadapter ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} rtclock)
 
 
 

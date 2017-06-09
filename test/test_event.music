@@ -6,7 +6,7 @@ rtf=1.
     args=
     zmq_addr=tcp://localhost:4555
 [encoder]
-    binary=../../bld_music-adapters/rate_encoder
+    binary=../../bld_music-adapters/nef_encoder
     np=1
     args=
     rate_min=1
