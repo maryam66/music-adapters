@@ -10,7 +10,7 @@ rtf=1.
     np=1
     args=
     rate_min=1
-    rate_max=200
+    rate_max=10
 [decoder]
     binary=../../bld_music-adapters/linear_decoder
     np=1
