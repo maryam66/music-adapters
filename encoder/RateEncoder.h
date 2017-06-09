@@ -34,8 +34,6 @@ class RateEncoder : public Adapter
         double rate_min, rate_max;
         double* next_spike;
         double* last_spike;
-        double* rates;
-        double* rates_buf;
 
         double rate2SpikeTime(double r);
 

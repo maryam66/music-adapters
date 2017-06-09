@@ -20,6 +20,8 @@ LinearDecoder::LinearDecoder()
 
 void LinearDecoder::init(int argc, char** argv)
 {
+
+    std::cout << "lin dec" << std::endl;
     tau = DEFAULT_TAU;
 
     Adapter::init(argc, argv);
