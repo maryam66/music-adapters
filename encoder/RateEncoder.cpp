@@ -44,21 +44,21 @@ void RateEncoder::init(int argc, char** argv)
 void
 RateEncoder::tick()
 {
+
     double next_t = runtime->time() + timestep;
     for (int n = 0; n < port_in->data_size; ++n)
     {
         double old_isi = next_spike[n] - last_spike[n];
         double part_time_left = (runtime->time() - last_spike[n]) / old_isi; 
-        double new_isi = rate2SpikeTime(rates[n]) * (1 - part_time_left);
+        double new_isi = rate2SpikeTime(port_in->data[n]) * (1 - part_time_left);
         next_spike[n] = runtime->time() + new_isi;
-        rates_buf[n] = rates[n];
 
 
         while(next_spike[n] < next_t)
         {
             static_cast<EventOutPort*>(port_out)->send(n, next_spike[n]);
             last_spike[n] = next_spike[n];
-            next_spike[n] += rate2SpikeTime(rates[n]); 
+            next_spike[n] += rate2SpikeTime(port_in->data[n]); 
         }
     }
 
