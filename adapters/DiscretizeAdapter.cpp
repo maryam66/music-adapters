@@ -51,6 +51,8 @@ DiscretizeAdapter::tick()
 void 
 DiscretizeAdapter::readGridPositionFile()
 {
+
+    std::cout << "discretize init " << std::endl;
     Json::Reader json_reader;
 
     std::ifstream grid_positions_file;
@@ -75,6 +77,7 @@ DiscretizeAdapter::readGridPositionFile()
     }
     else
     {
+    std::cout << "discretize init " << std::endl;
 
         for (int i = 0; i < port_out->data_size; ++i)
         {

@@ -24,6 +24,7 @@ class Adapter
         
         double stoptime;
         double timestep;
+        double rtf;
 
         void init(int argc, char** argv);
         void run(bool threaded);
@@ -34,7 +35,6 @@ class Adapter
 
     private:
         MPI::Intracomm comm;
-        double rtf;
 
         pthread_t thread;
 

@@ -18,6 +18,7 @@ asyncThread(void* arg)
 void
 Adapter::init(int argc, char** argv)
 {
+    std::cout << "adapter init " << std::endl;
     timestep = DEFAULT_TIMESTEP;
     stoptime = DEFAULT_STOPTIME;
     rtf = DEFAULT_RTF;

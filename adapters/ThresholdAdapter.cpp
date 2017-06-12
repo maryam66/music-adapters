@@ -20,7 +20,9 @@ ThresholdAdapter::ThresholdAdapter()
 
 void ThresholdAdapter::init(int argc, char** argv)
 {
+
     Adapter::init(argc, argv);
+    std::cout << "thres init " << std::endl;
 
     // config needed for this specific adapter
 }
