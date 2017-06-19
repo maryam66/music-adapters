@@ -23,12 +23,13 @@ void RateEncoder::init(int argc, char** argv)
     rate_min = DEFAULT_RATE_MIN;
     rate_max = DEFAULT_RATE_MAX;
 
-    Adapter::init(argc, argv);
+    Adapter::init(argc, argv, "RateEncoder");
 
     // config needed for this specific adapter
     setup->config("rate_min", &rate_min);
     setup->config("rate_max", &rate_max);
     normalization_factor = (rate_max - rate_min) / 2.; 
+
     
     next_spike = new double[port_in->data_size];
     last_spike = new double[port_in->data_size];
@@ -53,10 +54,9 @@ RateEncoder::tick()
         double new_isi = rate2SpikeTime(port_in->data[n]) * (1 - part_time_left);
         next_spike[n] = runtime->time() + new_isi;
 
-
         while(next_spike[n] < next_t)
         {
-            static_cast<EventOutPort*>(port_out)->send(n, next_spike[n]);
+            static_cast<EventOutPort*>(port_out)->send(n, next_spike[n] + timestep);
             last_spike[n] = next_spike[n];
             next_spike[n] += rate2SpikeTime(port_in->data[n]); 
         }
@@ -72,7 +72,8 @@ RateEncoder::rate2SpikeTime(double r)
     // the incoming data, which is interpreted as rate, is between -1 and 1.
     // scales rate between [rate_min, rate_max]
     // returns next spike time
-    return 1. / ((r+1) * normalization_factor + rate_min);
+    double isi = 1. / ((r+1) * normalization_factor + rate_min);
+    return isi;
 }
 
 

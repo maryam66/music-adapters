@@ -20,22 +20,21 @@ ThresholdAdapter::ThresholdAdapter()
 
 void ThresholdAdapter::init(int argc, char** argv)
 {
+    threshold = DEFAULT_THRESHOLD;
 
-    Adapter::init(argc, argv);
-    std::cout << "thres init " << std::endl;
+    Adapter::init(argc, argv, "Threshold");
 
     // config needed for this specific adapter
+    setup->config("threshold", &threshold);
 }
 
 
 void
 ThresholdAdapter::tick()
 {
-    double max = -DBL_MAX;
-    int argmax = 0;
     for (int i = 0; i < port_in->data_size; ++i)
     {
-        if (port_in->data[i] < 0.5)
+        if (port_in->data[i] < threshold)
             port_out->data[i] = 0.;
         else
             port_out->data[i] = 1.;

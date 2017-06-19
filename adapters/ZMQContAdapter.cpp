@@ -24,7 +24,7 @@ void ZMQContAdapter::init(int argc, char** argv)
 {
     msg_type = DEFAULT_MESSAGE_TYPE;
 
-    Adapter::init(argc, argv);
+    Adapter::init(argc, argv, "ZMQCont");
 
     // config needed for this specific adapter
     

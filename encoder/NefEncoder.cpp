@@ -22,7 +22,7 @@ void NefEncoder::init(int argc, char** argv)
 {
     resolution = DEFAULT_NEURON_RESOLUTION;
 
-    Adapter::init(argc, argv);
+    Adapter::init(argc, argv, "NefEncoder");
 
     srand48_r(time(NULL), &randBuffer);
 

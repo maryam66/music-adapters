@@ -16,14 +16,14 @@ asyncThread(void* arg)
 
 
 void
-Adapter::init(int argc, char** argv)
+Adapter::init(int argc, char** argv, std::string label)
 {
-    std::cout << "adapter init " << std::endl;
     timestep = DEFAULT_TIMESTEP;
     stoptime = DEFAULT_STOPTIME;
     rtf = DEFAULT_RTF;
 
     setup = new MUSIC::Setup (argc, argv);
+    std::cout << label << "Adapter init " << std::endl;
 
     setup->config("stoptime", &stoptime);
     setup->config("music_timestep", &timestep);
@@ -40,6 +40,8 @@ Adapter::init(int argc, char** argv)
 
     port_in->init(setup, "in");
     port_out->init(setup, "out");
+
+    this->label = label;
 
 }
 
@@ -91,7 +93,7 @@ Adapter::run(bool threaded)
     {
         dt_us += 1000000;
     }
-    std::cout << "Adapter: total simtime: " << dt_s << " " << dt_us << " ticks skipped " << ticks_skipped <<  std::endl;
+    std::cout << label << "Adapter: total simtime: " << dt_s << " " << dt_us << " ticks skipped " << ticks_skipped <<  std::endl;
 }
 
 

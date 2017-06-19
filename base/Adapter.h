@@ -26,7 +26,7 @@ class Adapter
         double timestep;
         double rtf;
 
-        void init(int argc, char** argv);
+        void init(int argc, char** argv, std::string);
         void run(bool threaded);
         virtual void tick(){};
         virtual void asyncTick(){};
@@ -35,6 +35,7 @@ class Adapter
 
     private:
         MPI::Intracomm comm;
+        std::string label;
 
         pthread_t thread;
 

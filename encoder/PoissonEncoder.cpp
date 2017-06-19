@@ -23,7 +23,7 @@ void PoissonEncoder::init(int argc, char** argv)
     rate_min = DEFAULT_RATE_MIN;
     rate_max = DEFAULT_RATE_MAX;
 
-    Adapter::init(argc, argv);
+    Adapter::init(argc, argv, "PoissonEncoder");
 
     // config needed for this specific adapter
     setup->config("rate_min", &rate_min);

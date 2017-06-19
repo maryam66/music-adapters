@@ -16,12 +16,17 @@
 #include "sys/time.h"
 #include "float.h"
 
+const double DEFAULT_THRESHOLD = 0.5;
+
 class ThresholdAdapter : public Adapter
 {
     public:
         ThresholdAdapter();
         void init(int argc, char** argv);
         void tick();
+
+    private:
+        double threshold;
 };
 
 #endif // THRESHOLD_ADAPTER_H

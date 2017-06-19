@@ -20,7 +20,7 @@ ArgmaxAdapter::ArgmaxAdapter()
 
 void ArgmaxAdapter::init(int argc, char** argv)
 {
-    Adapter::init(argc, argv);
+    Adapter::init(argc, argv, "Argmax");
 
     // config needed for this specific adapter
 }

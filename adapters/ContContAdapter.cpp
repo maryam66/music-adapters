@@ -22,7 +22,7 @@ void ContContAdapter::init(int argc, char** argv)
 {
     weights_filename = DEFAULT_WEIGHTS_FILENAME;
 
-    Adapter::init(argc, argv);
+    Adapter::init(argc, argv, "ContCont");
 
     // config needed for this specific adapter
     setup->config("weights_filename", &weights_filename);

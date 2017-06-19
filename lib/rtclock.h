@@ -119,12 +119,12 @@ RTClock::timespecFromSeconds (double t) const
   return ts;
 }
 
-//inline struct timespec
-//RTClock::timespecFromTimeval (const struct timeval& tv) const
-//{
-//  //struct timespec ts;
-//  //ts.tv_sec = tv.tv_sec;
-//  //ts.tv_nsec = 1000 * tv.tv_usec;
-//}
+inline struct timespec
+RTClock::timespecFromTimeval (const struct timeval& tv) const
+{
+  struct timespec ts;
+  ts.tv_sec = tv.tv_sec;
+  ts.tv_nsec = 1000 * tv.tv_usec;
+}
 
 #endif /* RTCLOCK_H */

@@ -22,7 +22,7 @@ void DiscretizeAdapter::init(int argc, char** argv)
 {
     grid_positions_filename = DEFAULT_GRID_POSITIONS_FILENAME;
 
-    Adapter::init(argc, argv);
+    Adapter::init(argc, argv, "Discretize");
 
     // config needed for this specific adapter
     setup->config("grid_positions_filename", &grid_positions_filename);
@@ -52,7 +52,6 @@ void
 DiscretizeAdapter::readGridPositionFile()
 {
 
-    std::cout << "discretize init " << std::endl;
     Json::Reader json_reader;
 
     std::ifstream grid_positions_file;
@@ -77,7 +76,6 @@ DiscretizeAdapter::readGridPositionFile()
     }
     else
     {
-    std::cout << "discretize init " << std::endl;
 
         for (int i = 0; i < port_out->data_size; ++i)
         {
