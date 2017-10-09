@@ -57,7 +57,7 @@ NefEncoder::tick()
         {
             if (neurons[n].propagate())
             {
-                static_cast<EventOutPort*>(port_out)->send(n, runtime->time());
+                static_cast<EventOutPort*>(port_out)->send(n, runtime->time() + timestep);
             }
         }
         t += resolution; // propagate one timestep 
