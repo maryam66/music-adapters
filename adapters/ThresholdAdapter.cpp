@@ -21,11 +21,13 @@ ThresholdAdapter::ThresholdAdapter()
 void ThresholdAdapter::init(int argc, char** argv)
 {
     threshold = DEFAULT_THRESHOLD;
+    heaviside = DEFAULT_HEAVISIDE;
 
     Adapter::init(argc, argv, "Threshold");
 
     // config needed for this specific adapter
     setup->config("threshold", &threshold);
+    setup->config("heaviside", &heaviside);
 }
 
 
@@ -37,7 +39,13 @@ ThresholdAdapter::tick()
         if (port_in->data[i] < threshold)
             port_out->data[i] = 0.;
         else
-            port_out->data[i] = 1.;
+        {
+            if (heaviside == 1)
+                port_out->data[i] = 1.;
+            else
+                port_out->data[i] = port_in->data[i];
+
+        }
     }
 }
 

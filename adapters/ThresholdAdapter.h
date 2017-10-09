@@ -17,6 +17,7 @@
 #include "float.h"
 
 const double DEFAULT_THRESHOLD = 0.5;
+const int DEFAULT_HEAVISIDE = 1;
 
 class ThresholdAdapter : public Adapter
 {
@@ -27,6 +28,7 @@ class ThresholdAdapter : public Adapter
 
     private:
         double threshold;
+        int heaviside;
 };
 
 #endif // THRESHOLD_ADAPTER_H
