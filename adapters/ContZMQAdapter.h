@@ -6,6 +6,7 @@
 #include <math.h>
 
 #include <music.hh>
+#include "music/error.hh"
 #include <mpi.h>
 
 #include "Adapter.h"
@@ -31,7 +32,8 @@ class ContZMQAdapter : public Adapter
     private:
         msg_types msg_type;
         Json::FastWriter writer;
-
+        double min;
+        double max;
 };
 
 #endif // CONT_ZMQ_ADAPTER_H
