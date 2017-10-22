@@ -16,7 +16,7 @@
 #include "sys/time.h"
 #include "float.h"
 
-const double DEFAULT_THRESHOLD = 0.5;
+const double DEFAULT_THRESHOLD = 0.0;
 const int DEFAULT_HEAVISIDE = 1;
 
 class ThresholdAdapter : public Adapter
