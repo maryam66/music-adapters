@@ -20,33 +20,51 @@ ThresholdAdapter::ThresholdAdapter()
 
 void ThresholdAdapter::init(int argc, char** argv)
 {
-    threshold = DEFAULT_THRESHOLD;
-    heaviside = DEFAULT_HEAVISIDE;
-
     Adapter::init(argc, argv, "Threshold");
 
-    // config needed for this specific adapter
-    setup->config("threshold", &threshold);
-    setup->config("heaviside", &heaviside);
+    if (not setup->config("threshold", &threshold))
+    {
+        threshold = DEFAULT_THRESHOLD;
+    }
+
+    if (not setup->config("is_heaviside", &is_heaviside))
+    {
+        is_heaviside = DEFAULT_IS_HEAVISIDE;
+    }
+
+    if (not setup->config("scale", &scale))
+    {
+        scale = DEFAULT_SCALE;
+    }
+
+    if (not setup->config("shift", &shift))
+    {
+        shift = DEFAULT_SHIFT;
+    }
 }
 
 
 void
 ThresholdAdapter::tick()
 {
+    double out;
     for (int i = 0; i < port_in->data_size; ++i)
     {
         if (port_in->data[i] < threshold)
-            port_out->data[i] = 0.;
+        {
+            out = 0.;
+        }
         else
         {
-            if (heaviside == 1)
-                port_out->data[i] = 1.;
+            if (is_heaviside)
+            {
+                out = 1.;
+            }
             else
-                port_out->data[i] = port_in->data[i];
-
+            {
+                out = port_in->data[i];
+            }
         }
+        port_out->data[i] = scale * out + shift;
     }
 }
-
-
