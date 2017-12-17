@@ -62,6 +62,11 @@ ContZMQAdapter::tick()
             val["max"] = max;
             val["min"] = min;
             json_data.append(val);
+
+            if (val["value"] > val["max"] or val["value"] < val["min"]){
+              std::cout << "WARNING: cont_zmq_adapter received value outside of bounds" << std::endl;
+            }
+
         }
     }
    static_cast<ZMQOutPort*>(port_out)->send (writer.write(json_data));
