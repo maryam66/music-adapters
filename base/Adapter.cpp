@@ -5,10 +5,12 @@ static void*
 asyncThread(void* arg)
 {
     Adapter* adapter = static_cast<Adapter*>(arg);
+
   
     for (int t = 0; adapter->runtime->time() < adapter->stoptime; t++)
     {
         adapter->asyncTick();
+
     }
 
     return 0;
@@ -49,9 +51,9 @@ void
 Adapter::run(bool threaded)
 {
 
+    MPI::COMM_WORLD.Barrier();
     RTClock clock( timestep / rtf );
 
-    MPI::COMM_WORLD.Barrier();
     runtime = new MUSIC::Runtime (setup, timestep);
 
     if (threaded)

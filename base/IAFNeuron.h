@@ -23,21 +23,21 @@ class IAFNeuron{
     public:
     double  bias, V_m, scaling;
        IAFNeuron(int dimensions, drand48_data randBuffer){
-           
-            double r;
-            drand48_r(&randBuffer, &r);
 
-            //V_m = 0.0;
-            V_m = r * 10;
+            double r;
+
             C_m = 250.0;
-            tau_m = 20.0; 
-            V_th = 10.0;
+            tau_m = 10.0; 
+            V_th = 15.0;
             V_reset = 0.0;
             I_e = 0.0;
             t_ref = 2;
 
             // dependent variables
             R = tau_m / C_m;
+
+            drand48_r(&randBuffer, &r);
+            V_m = r  * V_th;
             
             is_ref = 0.;
             resolution = 0.0;
@@ -48,11 +48,12 @@ class IAFNeuron{
        void setResolution(double resolution){
             this->resolution = resolution * 1000.;
             propagator = std::exp(-(this->resolution)/tau_m);
+
        }
 
        void encode(double* data){
             I_e = std::inner_product(alpha.begin(), alpha.end(), data, bias);
-
+            //std::cout << I_e << std::endl;
        }
 
        bool propagate(){
@@ -63,10 +64,9 @@ class IAFNeuron{
            }
            bool emit_spike = false;
 
-            
-           if (is_ref == 0){
-                //V_m += ((-(V_m-V_reset) + R * I_e) / tau_m ) * t; // forward euler?
-                V_m = R * (1 - propagator) * I_e + propagator * V_m; // exact!
+           if (is_ref <= 0){
+//               V_m += ((-(V_m-V_reset) + R * I_e) / tau_m ) * 1.0; // forward euler?
+                V_m = R * (1 - propagator) * I_e + propagator * (V_m - V_reset); // exact!
 
            }
            else{
@@ -82,14 +82,20 @@ class IAFNeuron{
            
        }
 
-       void init_nef(int dimensions){
-           std::vector<double> pref_direction;
+       void init_nef(int dimensions, drand48_data randBuffer){
+
+            double r;
+
+            std::vector<double> pref_direction;
             double ssum = 0;
-            scaling = 0. + std::rand() % 300;
+            scaling = 100.;
             for (int i = 0; i < dimensions; ++i){
-                double rand = std::rand() % 1000 / 1000. - 0.5;
-                ssum += rand * rand;
-                pref_direction.push_back(rand);
+                drand48_r(&randBuffer, &r);
+
+                r = 2 * r - 1.0;
+
+                ssum += r * r;
+                pref_direction.push_back(r);
             }
             ssum = std::sqrt(ssum);
 
@@ -98,7 +104,10 @@ class IAFNeuron{
                 pref_direction.pop_back();
             }
 
-            bias = std::rand() % 200; 
+            drand48_r(&randBuffer, &r);
+            r = 2 * r - 1.0;
+
+            bias = 375.0 + r * 100;
        }
 
 };
