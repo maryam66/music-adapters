@@ -25,7 +25,14 @@ void ContZMQAdapter::init(int argc, char** argv)
     Adapter::init(argc, argv, "ContZMQ");
 
     // config needed for this specific adapter
-    
+    if (not setup->config("min", &min))
+    {
+      MUSIC::error ("min not specified (cont_zmq_adapter)");
+    }
+    if (not setup->config("max", &max))
+    {
+      MUSIC::error ("max not specified (cont_zmq_adapter)");
+    }
 }
 
 void
@@ -52,7 +59,14 @@ ContZMQAdapter::tick()
             Json::Value val;
             val["value"] = port_in->data[i];
             val["ts"] = ts_now;
+            val["max"] = max;
+            val["min"] = min;
             json_data.append(val);
+
+            if (val["value"] > val["max"] or val["value"] < val["min"]){
+              std::cout << "WARNING: cont_zmq_adapter received value outside of bounds" << std::endl;
+            }
+
         }
     }
    static_cast<ZMQOutPort*>(port_out)->send (writer.write(json_data));
