@@ -82,32 +82,61 @@ class IAFNeuron{
            
        }
 
-       void init_nef(int dimensions, drand48_data randBuffer){
+       void init_nef(int dimensions, drand48_data randBuffer, bool one_hot){
 
-            double r;
+            if (one_hot == false){
+                double r;
 
-            std::vector<double> pref_direction;
-            double ssum = 0;
-            scaling = 100.;
-            for (int i = 0; i < dimensions; ++i){
+                std::vector<double> pref_direction;
+                double ssum = 0;
+                scaling = 100.;
+                for (int i = 0; i < dimensions; ++i){
+                    drand48_r(&randBuffer, &r);
+
+                    r = 2 * r - 1.0;
+
+                    ssum += r * r;
+                    pref_direction.push_back(r);
+                }
+                ssum = std::sqrt(ssum);
+
+                for (int i = 0; i < dimensions; ++i){
+                    alpha.push_back((pref_direction.back() / ssum) * scaling);
+                    pref_direction.pop_back();
+                }
+
                 drand48_r(&randBuffer, &r);
-
                 r = 2 * r - 1.0;
 
-                ssum += r * r;
-                pref_direction.push_back(r);
+                bias = 375.0 + r * 100;
             }
-            ssum = std::sqrt(ssum);
+            else{
+                double r;
 
-            for (int i = 0; i < dimensions; ++i){
-                alpha.push_back((pref_direction.back() / ssum) * scaling);
-                pref_direction.pop_back();
+                std::vector<double> pref_direction;
+                scaling = 100.;
+
+                drand48_r(&randBuffer, &r);
+                r = (int)(r * dimensions);
+
+                for (int i = 0; i < dimensions; ++i){
+                    if (r == i)
+                        pref_direction.push_back(1);
+                    else
+                        pref_direction.push_back(0);
+                }
+
+                for (int i = 0; i < dimensions; ++i){
+                    alpha.push_back(pref_direction.back() * scaling);
+                    pref_direction.pop_back();
+                }
+
+                drand48_r(&randBuffer, &r);
+                r = 2 * r - 1.0;
+
+                bias = 375.0 + r * 100;
             }
 
-            drand48_r(&randBuffer, &r);
-            r = 2 * r - 1.0;
-
-            bias = 375.0 + r * 100;
        }
 
 };

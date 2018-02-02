@@ -21,6 +21,7 @@
 
 
 const double DEFAULT_NEURON_RESOLUTION = 1e-3;
+const bool DEFAULT_ONE_HOT = false;
 
 class NefEncoder : public Adapter
 {
@@ -32,6 +33,7 @@ class NefEncoder : public Adapter
 
     private:
         double resolution;
+        bool one_hot;
         std::vector<IAFNeuron> neurons;
         double t;
 

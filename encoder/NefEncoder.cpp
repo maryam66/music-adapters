@@ -27,6 +27,7 @@ void NefEncoder::init(int argc, char** argv)
 
     // config needed for this specific adapter
     setup->config("neuron_resolution", &resolution);
+    setup->config("one_hot", &one_hot);
     
     for (int n = 0; n < port_out->data_size; ++n){
 
@@ -34,7 +35,7 @@ void NefEncoder::init(int argc, char** argv)
         IAFNeuron neuron(port_in->data_size, randBuffer);
         neuron.setResolution(resolution);
         srand48_r(time(NULL) - n, &randBuffer);
-        neuron.init_nef(port_in->data_size, randBuffer);
+        neuron.init_nef(port_in->data_size, randBuffer, one_hot);
         neuron.encode(port_in->data);
         neurons.push_back(neuron);
     }
