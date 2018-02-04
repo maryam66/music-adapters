@@ -21,9 +21,9 @@ NefEncoder::NefEncoder()
 void NefEncoder::init(int argc, char** argv)
 {
     resolution = DEFAULT_NEURON_RESOLUTION;
+    one_hot = DEFAULT_ONE_HOT;
 
     Adapter::init(argc, argv, "NefEncoder");
-
 
     // config needed for this specific adapter
     setup->config("neuron_resolution", &resolution);
