@@ -9,11 +9,10 @@
 #include "sys/time.h"
 #include "rtclock.h"
 
-#define DEBUG_OUTPUT false 
-
 const double DEFAULT_TIMESTEP = 1e-3;
 const double DEFAULT_STOPTIME = 1.;
 const double DEFAULT_RTF = 1.;
+const bool DEFAULT_VERBOSE = false;
 
 class Adapter
 {
@@ -25,6 +24,7 @@ class Adapter
         double stoptime;
         double timestep;
         double rtf;
+        bool verbose;
 
         void init(int argc, char** argv, std::string);
         void run(bool threaded);

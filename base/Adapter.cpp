@@ -23,6 +23,7 @@ Adapter::init(int argc, char** argv, std::string label)
     timestep = DEFAULT_TIMESTEP;
     stoptime = DEFAULT_STOPTIME;
     rtf = DEFAULT_RTF;
+    verbose = DEFAULT_VERBOSE;
 
     setup = new MUSIC::Setup (argc, argv);
     std::cout << label << "Adapter init " << std::endl;
@@ -30,6 +31,7 @@ Adapter::init(int argc, char** argv, std::string label)
     setup->config("stoptime", &stoptime);
     setup->config("music_timestep", &timestep);
     setup->config("rtf", &rtf);
+    setup->config("verbose", &verbose);
 
     comm = setup->communicator ();
     //int rank = comm.Get_rank ();       
@@ -70,15 +72,16 @@ Adapter::run(bool threaded)
     {
    
         tick();
-       
-#if DEBUG_OUTPUT
-        std::cout << "Adapter: ";
-        for (int i = 0; i < size_data_out; ++i)
-        {
-            std::cout << data_out[i] << " ";
-        }
-        std::cout << std::endl;
-#endif
+
+        if (verbose){  
+           std::cout << label << "Adapter: ";
+           for (int i = 0; i < port_out->data_size; ++i)
+           {
+               std::cout << port_out->data[i] << " ";
+           }
+           std::cout << std::endl;
+        }   
+
         clock.sleepNext(); 
         runtime->tick();
     }
