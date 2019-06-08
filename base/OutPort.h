@@ -3,6 +3,9 @@
 
 #include "Port.h"
 
+/**
+ *  Base class for all outgoing ports.
+ */
 class OutPort : public Port 
 {
     public:

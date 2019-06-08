@@ -27,6 +27,21 @@ void ZMQContAdapter::init(int argc, char** argv)
     Adapter::init(argc, argv, "ZMQCont");
 
     // config needed for this specific adapter
+    std::string msg_type_;
+
+    if (not setup->config("message_type", &msg_type_))
+    {
+      MUSIC::error ("message_type not specified (zmq_cont_adapter)");
+    }
+    if (msg_type_ == "GymObservation") 
+    {
+        msg_type = GymObservation;
+    }
+    else if (msg_type_ == "FloatArray")
+    {
+        msg_type = FloatArray;
+    }
+
     
 }
 
@@ -39,14 +54,6 @@ void
 ZMQContAdapter::asyncTick()
 {
     Json::Value json_msg = static_cast<ZMQInPort*>(port_in)->recvAsJson();
-
-    if (msg_type == ALEGrayScaleImage){
-        for (int i = 0; i < port_out->data_size; ++i)
-        {
-          // outgoing messages should be between -1 and 1. Grayscale pixels have to be treated accordingly
-          port_out->data[i] = (json_msg[i].asDouble() / 127.) - 1;
-        } 
-    }
 
     if (msg_type == FloatArray){
         for (int i = 0; i < port_out->data_size; ++i)

@@ -18,11 +18,16 @@
 #include "jsoncpp/json/json.h"
 #include <fstream>
 
-const double DEFAULT_RATE_MIN = 0.;
-const double DEFAULT_RATE_MAX = 100.;
-
+/**
+ * The Poisson encoder translates continuous values into spike trains with Poissonian statistic.
+ * The parameters 'rate_min' and 'rate_max' can be set in the MUSIC configuration.
+ */
 class PoissonEncoder : public Adapter
 {
+
+    const double DEFAULT_RATE_MIN = 0.;
+    const double DEFAULT_RATE_MAX = 100.;
+
     public:
         PoissonEncoder();
         void init(int argc, char** argv);

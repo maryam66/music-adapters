@@ -18,12 +18,16 @@
 #include <iostream>
 #include "jsoncpp/json/json.h"
 
-enum msg_types {FloatArray, GymCommand};
-
-const msg_types DEFAULT_MESSAGE_TYPE = GymCommand;
-
+/**
+ * Publishes continous data unsing a ZeroMQ socket using JSON serialization. 
+ * Different messages types can be used as output format.
+ * The message type 'FloatArray' determines the width of the array from the width of the incoming port and does not need any further parameters.
+ * The message type 'GymCommand' needs the parameter 'min' and 'max' which can be set in the MUSIC configuration file.
+ */
 class ContZMQAdapter : public Adapter
 {
+    enum msg_types {FloatArray, GymCommand}; 
+    const msg_types DEFAULT_MESSAGE_TYPE = FloatArray;
     public:
         ContZMQAdapter();
         void init(int argc, char** argv);

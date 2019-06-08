@@ -48,6 +48,10 @@ ContContAdapter::tick()
     gsl_blas_dgemv(CblasNoTrans, 1., &mat_weights.matrix, &vec_data_in.vector, 0., &vec_data_out.vector);
 }
 
+/**
+ * Reads the weight matrix from file in JSON format.
+ * If the file does not exists or can not be parsed, all weights are initialized with value 1/N where N is the width of the input port.
+ */
 void 
 ContContAdapter::readWeightsFile()
 {

@@ -18,10 +18,17 @@
 #include "jsoncpp/json/json.h"
 #include <fstream>
 
-const double DEFAULT_TAU = 0.03;
 
+/**
+ * Decodes spiking activity to continuous values by convolving incoming spikes using an exponential kernel with time-constant tau.
+ * The parameter tau can be set in the MUSIC configuration file.
+ * The number of input channels equals the number of output channels.
+ *
+ */
 class LinearDecoder : public Adapter
 {
+
+    const double DEFAULT_TAU = 0.03;
     public:
         LinearDecoder();
         void init(int argc, char** argv);

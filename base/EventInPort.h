@@ -9,6 +9,9 @@
 #define DEBUG_OUTPUT false 
 
 
+/**
+ * Implements the incoming MUSIC event port.
+ */
 class EventInPort : public InPort, MUSIC::EventHandlerGlobalIndex{
 
     class Event {

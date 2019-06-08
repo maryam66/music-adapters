@@ -1,6 +1,9 @@
 #include "Adapter.h" 
 
 
+/** 
+ * Starts asynchronous thread and calls asyncTick() regularly.
+ */
 static void*
 asyncThread(void* arg)
 {
@@ -17,6 +20,9 @@ asyncThread(void* arg)
 }
 
 
+/**
+ * Initializes the adapter with default values and reads the configuration. Sets up the MUSIC communicator and in- and out ports.
+ */
 void
 Adapter::init(int argc, char** argv, std::string label)
 {
@@ -49,6 +55,9 @@ Adapter::init(int argc, char** argv, std::string label)
 
 }
 
+/**
+ * Sets up the MUSIC runtime and the real-time clock and runs the adapter.
+ */
 void 
 Adapter::run(bool threaded)
 {
@@ -102,8 +111,9 @@ Adapter::run(bool threaded)
 }
 
 
-
-
+/**
+ * Finalizes the adapter and cleans up the MUSIC runtime.
+ */
 void
 Adapter::finalize()
 {

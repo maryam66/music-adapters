@@ -7,11 +7,14 @@
 
 #define DEBUG_OUTPUT false 
 
-const std::string DEFAULT_ZMQ_ADDR = "tcp://127.0.0.1:5556";
-const std::string DEFAULT_ZMQ_TOPIC = "out";
-
+/**
+ * Implements the incoming ZMQ socket.
+ */ 
 class ZMQOutPort : public OutPort
 {
+
+    const std::string DEFAULT_ZMQ_ADDR = "tcp://127.0.0.1:5556";
+    const std::string DEFAULT_ZMQ_TOPIC = "out";
 
     public:
         void init(MUSIC::Setup* setup, char* port_name);

@@ -22,10 +22,16 @@
 #include <gsl/gsl_vector_double.h>
 #include <gsl/gsl_blas.h>
 
-const string DEFAULT_WEIGHTS_FILENAME = "weights.json";
 
+/**
+ * Maps N incoming channels to M outgoing channels using a weight matrix.
+ * The weight matrix music be specifies in a file using JSON format. 
+ * The filename can be set in the MUSIC configuration with the parameter "weights_filename".
+ */
 class ContContAdapter : public Adapter
 {
+
+    const string DEFAULT_WEIGHTS_FILENAME = "weights.json";
     public:
         ContContAdapter();
         void init(int argc, char** argv);

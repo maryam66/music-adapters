@@ -9,17 +9,21 @@
 #include "sys/time.h"
 #include "rtclock.h"
 
-const double DEFAULT_TIMESTEP = 1e-3;
-const double DEFAULT_STOPTIME = 1.;
-const double DEFAULT_RTF = 1.;
-const bool DEFAULT_VERBOSE = false;
-
+/**
+ *  Base class for all adapters. 
+ */
 class Adapter
 {
 
+    const double DEFAULT_TIMESTEP = 1e-3; /**< Default timestep. */
+    const double DEFAULT_STOPTIME = 1.; /**< Default simulation duration. */
+    const double DEFAULT_RTF = 1.; /**< Default real-time factor. */
+    const bool DEFAULT_VERBOSE = false; /**< Default verbose.  */
+
+
     public:
-        MUSIC::Setup* setup;
-        MUSIC::Runtime* runtime;
+        MUSIC::Setup* setup; /**< MUSIC setup */
+        MUSIC::Runtime* runtime; /**< MUSIC runtime */
         
         double stoptime;
         double timestep;

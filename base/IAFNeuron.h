@@ -9,6 +9,10 @@
 #include <vector>
 #include <numeric>
 
+/**
+ * Basic implementation of an Integrate-And-Fire neuron.
+ * This neuron model is used for the regular rate and NEF encoding.
+ */
 class IAFNeuron{
     double tau_m, V_th, V_reset, I_e, C_m, R, resolution;
     double t_ref;// refactory time in ms 

@@ -16,13 +16,23 @@
 #include "sys/time.h"
 #include "float.h"
 
-const double DEFAULT_SCALE = 1.0;
-const double DEFAULT_SLOPE = 1.0;
-const double DEFAULT_X_OFFSET = 0.0;
-const double DEFAULT_Y_OFFSET = 0.0;
 
+/**
+ * Applies a sigmoidal function.
+ * The equation is:
+ *
+ * sig(x) = scale / ( 1. + std::exp(- port_in->data[i] * slope + x_offset)) + y_offset
+ *
+ * The parameter 'scale', 'slope', 'x_offset' and 'y_offset' can be set in the MUSIC configuration.
+ */
 class SigmoidAdapter : public Adapter
 {
+
+    const double DEFAULT_SCALE = 1.0;
+    const double DEFAULT_SLOPE = 1.0;
+    const double DEFAULT_X_OFFSET = 0.0;
+    const double DEFAULT_Y_OFFSET = 0.0;
+
     public:
         SigmoidAdapter();
         void init(int argc, char** argv);

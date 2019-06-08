@@ -6,7 +6,9 @@
 
 #define DEBUG_OUTPUT false 
 
-
+/**
+ * Implements the outgoing MUSIC event port.
+ */
 class EventOutPort : public OutPort{
     public:
         void init(MUSIC::Setup* setup, char* port_name);

@@ -19,12 +19,18 @@
 #include "jsoncpp/json/json.h"
 #include <fstream>
 
-
-const double DEFAULT_NEURON_RESOLUTION = 1e-3;
-const bool DEFAULT_ONE_HOT = false;
-
+/**
+ * Transforms continuous values to spikes by implementing the encoding step of the Neural Engeneering Framework (NEF).
+ * As described in NEF, each neuron has a random bias and preferred direction.
+ *
+ * The neural resolution for the simulated Intergrate-And-Fire neuron can be passed in the MUSIC configuration using the paramter 'neuron_resolution'.
+ */
 class NefEncoder : public Adapter
 {
+
+    const double DEFAULT_NEURON_RESOLUTION = 1e-3;
+    const bool DEFAULT_ONE_HOT = false;
+
     public:
         NefEncoder();
         void init(int argc, char** argv);

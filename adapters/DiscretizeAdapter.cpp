@@ -47,7 +47,40 @@ DiscretizeAdapter::tick()
     }
 }
 
-
+/**
+ * Read the provided JSON file to extracts the multidimensional mean and sigma for the Gaussian tuning curves (place cells).
+ * 
+ * The file must be structured such that for each output neuron the corresponding means and sigmas are concatenated.
+ * A valid JSON string for two output neurons in a two dimensional space would look like:
+ *  
+ * [[mean_x0, mean_y0, sigma_x0, sigma_y0],
+ *  [mean_x1, mean_y1, sigma_x1, sigma_y1]]
+ *
+ * Example Python script to create a valid JSON file:
+ *
+ * @code
+ * import numpy as np
+ * import json
+ * 
+ * num_neurons_x = 5
+ * num_neurons_y = 10
+ * 
+ * sigma_x = 0.2 
+ * sigma_y = 0.1
+ * 
+ * pos = []
+ * 
+ * for i, x in enumerate(np.linspace(-1.0, 1.0, num_neurons_x)):
+ *     for j, y in enumerate(np.linspace(-1.0, 1.0, num_neurons_y)):
+ *         pos.append([x, y, sigma_x, sigma_y])
+ * 
+ * with open("grid_pos.json", "w+") as f:
+ *     json.dump(pos, f)
+ *
+ * @endcode
+ *
+ * 
+ */
 void 
 DiscretizeAdapter::readGridPositionFile()
 {
