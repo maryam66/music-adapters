@@ -3,6 +3,9 @@ music-adapters
 
 A collection of adapters for the MUSIC libary.
 
+Run 'doxygen' to create the documentation including example configurations.
+
+
 Software dependencies
 =====================
 
