@@ -19,6 +19,7 @@ Optional dependencies
 - ZeroMQ
 - Json-cpp
 - GSL BLAS
+- Doxygen
 
 Installation
 ============
