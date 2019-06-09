@@ -1,25 +1,9 @@
 music-adapters
 ==============
 
-A collection of adapters for the MUSIC libary.
+A collection of adapters for the MUSIC library (https://github.com/INCF/MUSIC).
 
 Run 'doxygen' to create the documentation including example configurations.
-
-
-Software dependencies
-=====================
-
-- CMake
-- `MUSIC <https://github.com/INCF/MUSIC>`_
-- OpenMPI
-- pthread
-
-Optional dependencies
-=====================
-- ZeroMQ
-- Json-cpp
-- GSL BLAS
-- Doxygen
 
 Installation
 ============
