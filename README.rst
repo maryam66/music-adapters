@@ -9,7 +9,8 @@ Installation
 ============
 .. code:: bash
 
-  cmake -DCMAKE_INSTALL_PREFIX:PATH=<PREFIX> <music-adapters_SOURCE>
+  sudo apt install pkg-config libjsoncpp-dev libzmq3-dev libblas-dev libgsl-dev
+  cmake -DCMAKE_INSTALL_PREFIX:PATH=<PREFIX> -DMUSIC_LIBRARY=<path/to/libmusic.so> -DMUSIC_INCLUDE_DIR=<path/to/music/include> <music-adapters_SOURCE>
   make
   make install
 
