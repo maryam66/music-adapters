@@ -41,9 +41,6 @@ void ZMQContAdapter::init(int argc, char** argv)
     {
         msg_type = FloatArray;
     }
-
-    std::cout << "ZMQCONT " << msg_type_ << " " << msg_type << std::endl;
-    
 }
 
 void

@@ -49,7 +49,6 @@ void ContZMQAdapter::init(int argc, char** argv)
     {
         msg_type = GymCommand;
     }
-    std::cout << "CONTZMQ " << msg_type_ << " " << msg_type << std::endl;
 }
 
 void
