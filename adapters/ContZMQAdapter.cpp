@@ -41,14 +41,15 @@ void ContZMQAdapter::init(int argc, char** argv)
       MUSIC::error ("max not specified (cont_zmq_adapter)");
     }
 
-    if (msg_type_ == "FloatArray")
+    if (msg_type_.compare("FloatArray") == 0)
     {
         msg_type = FloatArray;
     }
-    else if (msg_type_ == "GymCommand")
+    else if (msg_type_.compare("GymCommand") == 0)
     {
         msg_type = GymCommand;
     }
+    std::cout << "CONTZMQ " << msg_type_ << " " << msg_type << std::endl;
 }
 
 void

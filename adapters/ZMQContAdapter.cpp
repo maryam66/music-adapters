@@ -33,15 +33,16 @@ void ZMQContAdapter::init(int argc, char** argv)
     {
       MUSIC::error ("message_type not specified (zmq_cont_adapter)");
     }
-    if (msg_type_ == "GymObservation") 
+    if (msg_type_.compare("GymObservation") == 0) 
     {
         msg_type = GymObservation;
     }
-    else if (msg_type_ == "FloatArray")
+    else if (msg_type_.compare("FloatArray") == 0)
     {
         msg_type = FloatArray;
     }
 
+    std::cout << "ZMQCONT " << msg_type_ << " " << msg_type << std::endl;
     
 }
 
