@@ -47,6 +47,7 @@ include_directories(lib/)
 add_executable(zmq_cont_adapter adapters/ZMQContAdapter.cpp)
 add_executable(cont_zmq_adapter adapters/ContZMQAdapter.cpp)
 add_executable(discretize_adapter adapters/DiscretizeAdapter.cpp)
+add_executable(discretize_adapter_pois adapters/DiscretizeAdapterPois.cpp)
 add_executable(argmax_adapter adapters/ArgmaxAdapter.cpp)
 add_executable(cont_cont_adapter adapters/ContContAdapter.cpp)
 add_executable(threshold_adapter adapters/ThresholdAdapter.cpp)
@@ -55,6 +56,7 @@ add_executable(sigmoid_adapter adapters/SigmoidAdapter.cpp)
 target_link_libraries(zmq_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
 target_link_libraries(cont_zmq_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
 target_link_libraries(discretize_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
+target_link_libraries(discretize_adapter_pois musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
 target_link_libraries(argmax_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
 target_link_libraries(cont_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS})
 target_link_libraries(threshold_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS})
@@ -89,6 +91,7 @@ install(TARGETS
     poisson_encoder
     cont_cont_adapter
     discretize_adapter
+    discretize_adapter_pois
     argmax_adapter
     threshold_adapter
     sigmoid_adapter
