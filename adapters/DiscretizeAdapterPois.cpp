@@ -59,10 +59,9 @@ DiscretizeAdapterPois::tick()
         // port_out->data[i] = -1. + 2. * std::exp(-tmp_/2.);
 
         // modifying maximum firing rate to fit it into the spiking network
-        fr_prob_tmp = 70. * timestep * std::exp(-tmp_/2.); //70. should be a par
+        fr_prob_tmp = 70. * timestep * std::exp(-tmp_/2.); //70. should be a parameter
         
         rnd = dis(gen);
-        std::cout << "The generated random number is: " << rnd << std::endl;
 
         if (rnd < fr_prob_tmp){
             static_cast<EventOutPort*>(port_out)->send(i, runtime->time() + timestep);
