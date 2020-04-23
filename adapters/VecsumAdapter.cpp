@@ -58,7 +58,7 @@ VecsumAdapter::tick()
         int id = static_cast<EventInPort*>(port_in)->spikes.top ().id;
 
         action_fr[id] += 0.01;
-        std::cout << "Neuron # " << id << " fired at " << runtime->time() << ". Firing value is " << action_fr[id] << std::endl;
+        // std::cout << "Neuron # " << id << " fired at " << runtime->time() << ". Firing value is " << action_fr[id] << std::endl;
         // port_out->data[id] += (std::exp ((t_spike - runtime->time()) * inv_tau) * inv_tau);
         
         static_cast<EventInPort*>(port_in)->spikes.pop (); // remove spike from queue
@@ -79,7 +79,7 @@ VecsumAdapter::tick()
     for (int i = 0; i < port_out->data_size; ++i)
     {
         port_out->data[i] = action_vec[i];
-        std::cout << "Action vec: " << i << ": " << action_vec[i] << std::endl;
+        // std::cout << "Action vec: " << i << ": " << action_vec[i] << std::endl;
     }
 
     /*
