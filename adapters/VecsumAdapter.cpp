@@ -39,6 +39,8 @@ void VecsumAdapter::init(int argc, char** argv)
 
     assign_action_to_neurons();
     initialize_action_fr();
+    // action_tr.open("action_traces.dat");
+    // action_vec_fl.open("action_vector.dat");
 }
 
 
@@ -46,10 +48,18 @@ void
 VecsumAdapter::tick()
 {
     double next_t = runtime->time() + timestep;
+    action_vec[0] = 0.0;
+    action_vec[1] = 0.0;
 
     for (int i = 0; i < port_in->data_size; i++){
 
         action_fr[i] *= decay_rate;
+        // if (next_t>90){
+            // action_tr.close();
+        // }
+        // else{
+            // action_tr << i << "\t" << action_fr[i] << "\n";
+        // }
     }
 
     while (!static_cast<EventInPort*>(port_in)->spikes.empty () && static_cast<EventInPort*>(port_in)->spikes.top ().t < next_t)
@@ -57,7 +67,7 @@ VecsumAdapter::tick()
         double t_spike = static_cast<EventInPort*>(port_in)->spikes.top ().t;
         int id = static_cast<EventInPort*>(port_in)->spikes.top ().id;
 
-        action_fr[id] += 0.01;
+        action_fr[id] += 0.0001;
         // std::cout << "Neuron # " << id << " fired at " << runtime->time() << ". Firing value is " << action_fr[id] << std::endl;
         // port_out->data[id] += (std::exp ((t_spike - runtime->time()) * inv_tau) * inv_tau);
         
@@ -71,17 +81,18 @@ VecsumAdapter::tick()
         //     std::cout << "Neuron " << i << " fired! " << action_fr[i] << std::endl;
         // }
     for (int i = 0; i < port_in->data_size; i++){
-        action_vec[0] = action_dir[i][0] * action_fr[i];
-        action_vec[1] = action_dir[i][1] * action_fr[i];
+        action_vec[0] += action_dir[i][0] * action_fr[i];
+        action_vec[1] += action_dir[i][1] * action_fr[i];
     }
     // std::cout << port_out->data_size << std::endl;
     // std::cout << "VECSUMADAPTER" << std::endl;
     for (int i = 0; i < port_out->data_size; ++i)
     {
         port_out->data[i] = action_vec[i];
+        // port_out->data[i] = constact[i];
         // std::cout << "Action vec: " << i << ": " << action_vec[i] << std::endl;
     }
-
+    // action_vec_fl << action_vec[0] << "\t" << action_vec[1] << "\n";
     /*
       while (!static_cast<EventInPort*>(port_in)->spikes.empty () && static_cast<EventInPort*>(port_in)->spikes.top ().t < next_t)
       {
@@ -115,7 +126,7 @@ void VecsumAdapter::assign_action_to_neurons()
     {
         action_dir[i][0] = sin(2*PI*i/num_action_neurons);
         action_dir[i][1] = cos(2*PI*i/num_action_neurons);
-        std::cout << "Neuron " << i << "x: " << action_dir[i][0] << ", y: " << action_dir[i][1] << std::endl;
+        // std::cout << "Neuron " << i << "x: " << action_dir[i][0] << ", y: " << action_dir[i][1] << std::endl;
     }
 }
 

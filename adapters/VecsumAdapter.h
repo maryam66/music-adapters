@@ -5,6 +5,7 @@
 #include <map>
 #include <math.h>
 #include <cmath>
+#include <fstream>
 
 #include <music.hh>
 #include <mpi.h>
@@ -32,8 +33,12 @@ class VecsumAdapter : public Adapter
         double **action_dir = NULL;
         // double action_fr[40] = {0.0};
         double action_vec[2] = {0.0};
+        // double constact[2] = {-0.01, -0.01};
         // double action_dir[40][2] = {0.0};
         double tau, decay_rate;
+        // std::ofstream action_tr;
+        // std::ofstream action_vec_fl;
+
 
     private:
         void assign_action_to_neurons();
