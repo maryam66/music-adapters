@@ -13,9 +13,9 @@ dt = 0.01
 
 while t < t_max:
     msg = json.dumps([
-        {'max': 1., 'min': -1., 'value': t, 'ts': time.time()},
+        {'max': 1., 'min': -1., 'value': t, 'ts': time.time()}
     ])
-    pub.send(msg)
+    pub.send_json(msg)
     time.sleep(dt)
 
     t += dt
