@@ -50,6 +50,7 @@ add_executable(discretize_adapter adapters/DiscretizeAdapter.cpp)
 add_executable(discretize_adapter_pois adapters/DiscretizeAdapterPois.cpp)
 add_executable(argmax_adapter adapters/ArgmaxAdapter.cpp)
 add_executable(vecsum_adapter adapters/VecsumAdapter.cpp)
+add_executable(dopspike_adapter adapters/DopamineSpike.cpp)
 add_executable(cont_cont_adapter adapters/ContContAdapter.cpp)
 add_executable(threshold_adapter adapters/ThresholdAdapter.cpp)
 add_executable(sigmoid_adapter adapters/SigmoidAdapter.cpp)
@@ -60,6 +61,7 @@ target_link_libraries(discretize_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_L
 target_link_libraries(discretize_adapter_pois musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
 target_link_libraries(argmax_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
 target_link_libraries(vecsum_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
+target_link_libraries(dopspike_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY})
 target_link_libraries(cont_cont_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS})
 target_link_libraries(threshold_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS})
 target_link_libraries(sigmoid_adapter musicadapter ${ZMQ_LIBRARIES} ${MUSIC_LIBRARIES} ${PTHREAD} ${MPI_LIBRARIES} ${JSONCPP_LIBRARY} ${GSL} ${BLAS})
@@ -96,6 +98,7 @@ install(TARGETS
     discretize_adapter_pois
     argmax_adapter
     vecsum_adapter
+    dopspike_adapter
     threshold_adapter
     sigmoid_adapter
     musicadapter
