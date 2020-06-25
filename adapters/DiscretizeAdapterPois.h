@@ -38,10 +38,12 @@ class DiscretizeAdapterPois : public Adapter
         void init(int argc, char** argv);
         void tick();
         double time;
+        std::ofstream location_fl;
         // random number generator
         // double sim_res = 0.01;
         int Seed = 0;
         std::mt19937 gen;
+        float firing_rate_parameter = 0.0;
         
 
     private:
@@ -52,6 +54,7 @@ class DiscretizeAdapterPois : public Adapter
 
         void readGridPositionFile();
         void readSeedfromNetParams();
+        void readParams();
 
 };
 

@@ -20,7 +20,9 @@ VecsumAdapter::VecsumAdapter()
 
 void VecsumAdapter::init(int argc, char** argv)
 {   
-    tau = DEFAULT_TAU;  
+    //tau = DEFAULT_TAU;  It is replaced by the function to update the parameters.
+
+    readParams();
 
     Adapter::init(argc, argv, "Vecsum");
 
@@ -86,12 +88,19 @@ VecsumAdapter::tick()
     }
     // std::cout << port_out->data_size << std::endl;
     // std::cout << "VECSUMADAPTER" << std::endl;
+
+    port_out->data[0] = action_vec[0];
+    port_out->data[1] = action_vec[1];
+    port_out->data[2] = next_t;
+
+    /*
     for (int i = 0; i < port_out->data_size; ++i)
     {
         port_out->data[i] = action_vec[i];
         // port_out->data[i] = constact[i];
         // std::cout << "Action vec: " << i << ": " << action_vec[i] << std::endl;
     }
+    */
     // action_vec_fl << action_vec[0] << "\t" << action_vec[1] << "\n";
     /*
       while (!static_cast<EventInPort*>(port_in)->spikes.empty () && static_cast<EventInPort*>(port_in)->spikes.top ().t < next_t)
@@ -137,4 +146,18 @@ void VecsumAdapter::initialize_action_fr()
         action_fr[i] = 0.0;
         // action_fr[i] = 0.0;
     }
+}
+
+void VecsumAdapter::readParams()
+{
+    // ********  Read From file ********
+    //action_fr & tau calculation
+    std::ifstream file("network_params_spikingnet.json");
+    Json::Reader reader;
+    Json::Value json_file;
+    reader.parse(file, json_file);
+    act_fr = json_file["action"]["orientation_sel_dic"]["mov_step"].asFloat();
+    tau = json_file["action"]["orientation_sel_dic"]["tau"].asFloat();
+    file.close();
+    // *********************************   
 }

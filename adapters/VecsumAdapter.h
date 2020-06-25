@@ -14,6 +14,7 @@
 #include "EventInPort.h"
 #include "ContOutPort.h"
 
+#include "jsoncpp/json/json.h"
 #include "sys/time.h"
 #include "float.h"
 
@@ -22,7 +23,7 @@
  */
 class VecsumAdapter : public Adapter
 {
-    const double DEFAULT_TAU = 0.05;
+    const double DEFAULT_TAU = 0.005;
     const double PI = M_PI;
     public:
         VecsumAdapter();
@@ -35,15 +36,15 @@ class VecsumAdapter : public Adapter
         double action_vec[2] = {0.0};
         // double constact[2] = {-0.01, -0.01};
         // double action_dir[40][2] = {0.0};
-        double tau, decay_rate;
+        double tau=0.05, decay_rate=0;
         // std::ofstream action_tr;
         // std::ofstream action_vec_fl;
-
+        float act_fr = 0;
 
     private:
         void assign_action_to_neurons();
         void initialize_action_fr();
+        void readParams();
 };
 
 #endif // VECSUM_ADAPTER_H
-

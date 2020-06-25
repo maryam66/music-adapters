@@ -27,6 +27,7 @@ void DiscretizeAdapterPois::init(int argc, char** argv)
     // config needed for this specific adapter
     setup->config("grid_positions_filename", &grid_positions_filename);
     
+    readParams();  //Initialize the parameters from files.
     readGridPositionFile();
     readSeedfromNetParams();
 
@@ -35,6 +36,9 @@ void DiscretizeAdapterPois::init(int argc, char** argv)
 
     gen.seed(Seed);
     std::cout << "The seed number is:" << Seed << std::endl;
+
+    location_fl.open("agents_location.dat");
+    location_fl << "time\tx\ty\n";
 }
 
 
@@ -47,6 +51,15 @@ DiscretizeAdapterPois::tick()
     // bool spk = 0;
     // time = runtime->time();
     std::uniform_real_distribution<> dis(0.0, 1.0);
+
+    location_fl << runtime->time() << "\t" \
+                << port_in->data[0] << "\t" \
+                << port_in->data[1] << "\n";
+
+    if (runtime->time()>=10.0-timestep){
+        location_fl.close();
+    }
+
     for (int i = 0; i < port_out->data_size; ++i){
         double tmp_ = 0; 
     
@@ -59,7 +72,7 @@ DiscretizeAdapterPois::tick()
         // port_out->data[i] = -1. + 2. * std::exp(-tmp_/2.);
 
         // modifying maximum firing rate to fit it into the spiking network
-        fr_prob_tmp = 70. * timestep * std::exp(-tmp_/2.); //70. should be a parameter
+        fr_prob_tmp = firing_rate_parameter * timestep * std::exp(-tmp_/2.); 
         
         rnd = dis(gen);
 
@@ -162,6 +175,8 @@ DiscretizeAdapterPois::readGridPositionFile()
 
 }
 
+// The following function is commented out and replaced by the function below it
+/*
 void DiscretizeAdapterPois::readSeedfromNetParams()
 {
     std::string search;
@@ -208,4 +223,28 @@ void DiscretizeAdapterPois::readSeedfromNetParams()
             }
     }
     inFile.close();
+}
+*/
+void DiscretizeAdapterPois::readSeedfromNetParams()
+{
+    std::ifstream file("network_params.json");
+    Json::Reader reader;
+    Json::Value json_file;
+    reader.parse(file, json_file);
+    Seed = json_file["kernel_params"]["seed"].asInt();
+    std::cout << "kernel_params: seed: " << Seed << std::endl;
+    file.close();
+}
+
+// The following function helps to assign the parameters from the file for the other functions to use
+void DiscretizeAdapterPois::readParams()
+{
+
+    std::ifstream file("network_params_spikingnet.json");
+    Json::Reader reader;
+    Json::Value json_file;
+    reader.parse(file, json_file);
+    firing_rate_parameter = json_file["place"]["spatial_prop"]["max_fr"].asFloat();
+    file.close();
+
 }
