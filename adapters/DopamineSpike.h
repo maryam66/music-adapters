@@ -4,17 +4,17 @@
 #include <iostream>
 #include <map>
 #include <math.h>
+#include <fstream>
 
 #include <music.hh>
 #include <mpi.h>
 
 #include "Adapter.h"
-#include "ZMQInPort.h"
+#include "ContInPort.h"
 #include "EventOutPort.h"
 
 #include "sys/time.h"
 
-#include <iostream>
 #include "jsoncpp/json/json.h"
 
 
@@ -27,17 +27,14 @@
 class DopamineSpike : public Adapter
 {
 
-    enum msg_types {FloatArray, GymObservation};
-    const msg_types DEFAULT_MESSAGE_TYPE = GymObservation;
     public:
         DopamineSpike();
         void init(int argc, char** argv);
         void tick();
-        void asyncTick();
+        std::ofstream rew_file;
+        std::ofstream dop_spk_file;
 
     private:
-        msg_types msg_type;
-
 };
 
-#endif // ZMQ_CONT_ADAPTER_H
+#endif // DOPAMINE_SPIKE_H

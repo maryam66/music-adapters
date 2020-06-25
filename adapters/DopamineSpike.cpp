@@ -15,80 +15,30 @@ main(int argc, char** argv)
 
 DopamineSpike::DopamineSpike()
 {
-    port_in = new ZMQInPort();
+    port_in = new ContInPort();
     port_out = new EventOutPort();
 
 }
 
 void DopamineSpike::init(int argc, char** argv)
 {
-    msg_type = DEFAULT_MESSAGE_TYPE;
-
-    Adapter::init(argc, argv, "ZMQCont");
-
-    // config needed for this specific adapter
-    std::string msg_type_;
-
-    if (not setup->config("message_type", &msg_type_))
-    {
-      MUSIC::error ("message_type not specified (zmq_cont_adapter)");
-    }
-    if (msg_type_.compare("GymObservation") == 0) 
-    {
-        msg_type = GymObservation;
-    }
-    else if (msg_type_.compare("FloatArray") == 0)
-    {
-        msg_type = FloatArray;
-    }
+    Adapter::init(argc, argv, "Discretize");
+    rew_file.open("reward_value.dat");
+    dop_spk_file.open("reward_spikes.dat");
 }
 
 void
 DopamineSpike::tick()
 {
-}
-
-void
-DopamineSpike::asyncTick()
-{
-    Json::Value json_msg = static_cast<ZMQInPort*>(port_in)->recvAsJson();
-
-    if (msg_type == FloatArray){
-        for (int i = 0; i < port_out->data_size; ++i)
-        {
-          //TODO check for input range and rescale to [-1, 1]
-        //   port_out->data[i] = json_msg[i].asDouble() / 2.;
-            if (json_msg[i].asDouble() > 0){
+    for (int i = 0; i < port_out->data_size; ++i){
+    
+        // calculate distance to this place cell 
+        for (int j = 0; j < port_in->data_size; ++j){
+            rew_file << runtime->time() << "\t" << port_in->data[j] << std::endl;
+            if (port_in->data[j] > 0){
                 static_cast<EventOutPort*>(port_out)->send(i, runtime->time() + timestep);
+                dop_spk_file << runtime->time() + timestep << std::endl;
             }
-        } 
-    }
-
-    if (msg_type == GymObservation){
-
-        struct timeval now_;
-        gettimeofday(&now_, NULL);
-        double ts_now = now_.tv_sec + now_.tv_usec/1000000.;
-
-        int i = 0;
-        Json::Value::iterator it = json_msg.begin();
-        while (it != json_msg.end()){
-            Json::Value v = (*it);
-            if (v["value"].asFloat()>0){
-                static_cast<EventOutPort*>(port_out)->send(i, runtime->time() + timestep);
-            }
-            // port_out->data[i] = 2 * (v["value"].asFloat() - v["min"].asFloat()) / 
-            //           ((v["max"].asFloat() - v["min"].asFloat())) - 1;
-
-            double t_diff = ts_now - v["ts"].asDouble();
-            if (t_diff > 0.01){
-                std::cout << "WARNING: ZMQ_in_adapter " << " might be out of sync" << std::endl;
-            }
-
-            ++it;
-            ++i;
         }
-
     }
 }
-
