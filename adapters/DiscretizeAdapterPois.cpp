@@ -56,7 +56,7 @@ DiscretizeAdapterPois::tick()
                 << port_in->data[0] << "\t" \
                 << port_in->data[1] << "\n";
 
-    if (runtime->time()>=10.0-timestep){
+    if (runtime->time()>=Simtime-timestep){
         location_fl.close();
     }
 
@@ -232,6 +232,8 @@ void DiscretizeAdapterPois::readSeedfromNetParams()
     Json::Value json_file;
     reader.parse(file, json_file);
     Seed = json_file["kernel_params"]["seed"].asInt();
+    Simtime = json_file["kernel_params"]["simtime"].asFloat();
+    Simtime = Simtime/1000;
     std::cout << "kernel_params: seed: " << Seed << std::endl;
     file.close();
 }

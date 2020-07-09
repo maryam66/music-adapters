@@ -42,6 +42,7 @@ class DiscretizeAdapterPois : public Adapter
         // random number generator
         // double sim_res = 0.01;
         int Seed = 0;
+        int Simtime = 10.0;
         std::mt19937 gen;
         float firing_rate_parameter = 0.0;
         
