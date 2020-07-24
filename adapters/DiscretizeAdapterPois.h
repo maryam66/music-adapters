@@ -45,7 +45,7 @@ class DiscretizeAdapterPois : public Adapter
         int Simtime = 10.0;
         std::mt19937 gen;
         float firing_rate_parameter = 0.0;
-        
+        std::string data_path="./";
 
     private:
         string grid_positions_filename;
@@ -56,6 +56,7 @@ class DiscretizeAdapterPois : public Adapter
         void readGridPositionFile();
         void readSeedfromNetParams();
         void readParams();
+        void readdatapath();
 
 };
 

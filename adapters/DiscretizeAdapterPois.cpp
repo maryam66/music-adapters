@@ -30,14 +30,15 @@ void DiscretizeAdapterPois::init(int argc, char** argv)
     readParams();  //Initialize the parameters from files.
     readGridPositionFile();
     readSeedfromNetParams();
+    readdatapath();
 
     // setting up the random number generator with seed=Seed
     // std::uniform_real_distribution<> dis(0.0, 1.0);
 
     gen.seed(Seed);
     std::cout << "The seed number is:" << Seed << std::endl;
-
-    location_fl.open("agents_location.dat");
+    std::cout << "Data path: " << data_path+"/agents_location.dat" << std::endl;
+    location_fl.open(data_path+"/agents_location.dat");
     location_fl << "time\tx\ty\n";
 }
 
@@ -247,6 +248,18 @@ void DiscretizeAdapterPois::readParams()
     Json::Value json_file;
     reader.parse(file, json_file);
     firing_rate_parameter = json_file["place"]["spatial_prop"]["max_fr"].asFloat();
+    file.close();
+
+}
+
+void DiscretizeAdapterPois::readdatapath()
+{
+
+    std::ifstream file("sim_params.json");
+    Json::Reader reader;
+    Json::Value json_file;
+    reader.parse(file, json_file);
+    data_path = json_file["data_path"].asString();
     file.close();
 
 }
