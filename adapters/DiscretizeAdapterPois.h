@@ -33,12 +33,14 @@
 class DiscretizeAdapterPois : public Adapter
 {
     const string DEFAULT_GRID_POSITIONS_FILENAME = "grid_positions.json";
+    const string DEFAULT_REPRESENTATION = "place";
     public:
         DiscretizeAdapterPois();
         void init(int argc, char** argv);
         void tick();
         double time;
         std::ofstream location_fl;
+        std::ofstream firing_rate;
         // random number generator
         // double sim_res = 0.01;
         int Seed = 0;
@@ -46,9 +48,11 @@ class DiscretizeAdapterPois : public Adapter
         std::mt19937 gen;
         float firing_rate_parameter = 0.0;
         std::string data_path="./";
+        const double PI = M_PI;
 
     private:
         string grid_positions_filename;
+        std::string representation_type;
         Json::Value json_grid_positions; 
         std::map<int, double*> grid_positions;
         std::map<int, double*> sigmas;

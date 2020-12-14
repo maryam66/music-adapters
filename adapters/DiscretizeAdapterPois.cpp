@@ -21,11 +21,13 @@ DiscretizeAdapterPois::DiscretizeAdapterPois()
 void DiscretizeAdapterPois::init(int argc, char** argv)
 {
     grid_positions_filename = DEFAULT_GRID_POSITIONS_FILENAME;
+    representation_type = DEFAULT_REPRESENTATION;
 
     Adapter::init(argc, argv, "Discretize");
 
     // config needed for this specific adapter
     setup->config("grid_positions_filename", &grid_positions_filename);
+    setup->config("representation_type", &representation_type);
     
     readParams();  //Initialize the parameters from files.
     readGridPositionFile();
@@ -40,6 +42,12 @@ void DiscretizeAdapterPois::init(int argc, char** argv)
     std::cout << "Data path: " << data_path+"/agents_location.dat" << std::endl;
     location_fl.open(data_path+"/agents_location.dat");
     location_fl << "time\tx\ty\n";
+
+    firing_rate.open(data_path+"/firing_rate.dat");
+    firing_rate << "x\ty\tID\tfr\n";
+
+    std::cout << "The simulation is based on " << representation_type << " representation\n";
+
 }
 
 
@@ -49,6 +57,9 @@ DiscretizeAdapterPois::tick()
     double rnd = 0.0;
     // double tmp_ = 0;
     double fr_prob_tmp = 0;
+    // std::string representation_type = "place";
+    double phi_l, omega;
+    double kl [2];
     // bool spk = 0;
     // time = runtime->time();
     std::uniform_real_distribution<> dis(0.0, 1.0);
@@ -57,23 +68,41 @@ DiscretizeAdapterPois::tick()
                 << port_in->data[0] << "\t" \
                 << port_in->data[1] << "\n";
 
-    if (runtime->time()>=Simtime-timestep){
-        location_fl.close();
-    }
-
     for (int i = 0; i < port_out->data_size; ++i){
-        double tmp_ = 0; 
+        double tmp_ = 0;
+        double int_mult = 0;
     
         // calculate distance to this place cell 
-        for (int j = 0; j < port_in->data_size; ++j){
-            tmp_ += std::pow((port_in->data[j] - grid_positions[i][j]) / sigmas[i][j], 2);
+
+        if (representation_type == "place"){
+            // std::cout << "place\n";
+            for (int j = 0; j < port_in->data_size; ++j){
+                tmp_ += std::pow((port_in->data[j] - grid_positions[i][j]) / sigmas[i][j], 2);
+            }
+        }
+        else if (representation_type == "grid"){
+            // std::cout << "grid\n";
+            for (int hex_axis = 0; hex_axis < 3; hex_axis++){
+                phi_l = -PI/6 + hex_axis*PI/3;
+                omega = 2*PI/(sin(PI/3)*sigmas[i][0]);
+                kl[0] = cos(phi_l);
+                kl[1] = sin(phi_l);
+                int_mult = kl[0]*(port_in->data[0] - grid_positions[i][0]) + kl[1]*(port_in->data[1] - grid_positions[i][1]);
+                tmp_ += cos(omega*int_mult) - 1;
+            }
+            tmp_ = -tmp_*sigmas[i][1]/1.5;
         }
        
         // calculate activation in respect to gaussion kernel
         // port_out->data[i] = -1. + 2. * std::exp(-tmp_/2.);
 
         // modifying maximum firing rate to fit it into the spiking network
-        fr_prob_tmp = firing_rate_parameter * timestep * std::exp(-tmp_/2.); 
+        fr_prob_tmp = firing_rate_parameter * timestep * std::exp(-tmp_/2.);
+
+        firing_rate << port_in->data[0] << "\t" \
+                    << port_in->data[1] << "\t" \
+                    << i << "\t" \
+                    << firing_rate_parameter * std::exp(-tmp_/2.) << "\n";
         
         rnd = dis(gen);
 
@@ -89,6 +118,11 @@ DiscretizeAdapterPois::tick()
         //     spk = 0;
         // }
         // port_out->data[i] = spk;
+    }
+
+    if (runtime->time()>=Simtime-timestep){
+        location_fl.close();
+        firing_rate.close();
     }
 }
 
