@@ -262,12 +262,12 @@ void DiscretizeAdapterPois::readSeedfromNetParams()
 */
 void DiscretizeAdapterPois::readSeedfromNetParams()
 {
-    std::ifstream file("network_params.json");
+    std::ifstream file("sim_params.json");
     Json::Reader reader;
     Json::Value json_file;
     reader.parse(file, json_file);
-    Seed = json_file["kernel_params"]["seed"].asInt();
-    Simtime = json_file["kernel_params"]["simtime"].asFloat();
+    Seed = json_file["input_rng_seed"].asInt();
+    Simtime = json_file["simtime"].asFloat();
     Simtime = Simtime/1000;
     std::cout << "kernel_params: seed: " << Seed << std::endl;
     file.close();
