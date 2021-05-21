@@ -40,7 +40,7 @@ class DiscretizeAdapterPois : public Adapter
         void tick();
         double time;
         std::ofstream location_fl;
-        std::ofstream firing_rate;
+        //std::ofstream firing_rate;
         // random number generator
         // double sim_res = 0.01;
         int Seed = 0;

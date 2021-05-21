@@ -43,8 +43,8 @@ void DiscretizeAdapterPois::init(int argc, char** argv)
     location_fl.open(data_path+"/agents_location.dat");
     location_fl << "time\tx\ty\n";
 
-    firing_rate.open(data_path+"/firing_rate.dat");
-    firing_rate << "x\ty\tID\tfr\n";
+    // firing_rate.open(data_path+"/firing_rate.dat");
+    // firing_rate << "x\ty\tID\tfr\n";
 
     std::cout << "The simulation is based on " << representation_type << " representation\n";
 
@@ -99,10 +99,10 @@ DiscretizeAdapterPois::tick()
         // modifying maximum firing rate to fit it into the spiking network
         fr_prob_tmp = firing_rate_parameter * timestep * std::exp(-tmp_/2.);
 
-        firing_rate << port_in->data[0] << "\t" \
-                    << port_in->data[1] << "\t" \
-                    << i << "\t" \
-                    << firing_rate_parameter * std::exp(-tmp_/2.) << "\n";
+        // << port_in->data[0] << "\t" \
+        //            << port_in->data[1] << "\t" \
+        //            << i << "\t" \
+        //            << firing_rate_parameter * std::exp(-tmp_/2.) << "\n";
         
         rnd = dis(gen);
 
@@ -122,7 +122,7 @@ DiscretizeAdapterPois::tick()
 
     if (runtime->time()>=Simtime-timestep){
         location_fl.close();
-        firing_rate.close();
+        //firing_rate.close();
     }
 }
 
