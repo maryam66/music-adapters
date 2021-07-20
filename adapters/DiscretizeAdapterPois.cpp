@@ -27,7 +27,7 @@ void DiscretizeAdapterPois::init(int argc, char** argv)
 
     // config needed for this specific adapter
     setup->config("grid_positions_filename", &grid_positions_filename);
-    setup->config("representation_type", &representation_type);
+//    setup->config("representation_type", &representation_type);
     
     readParams();  //Initialize the parameters from files.
     readGridPositionFile();
@@ -71,17 +71,19 @@ DiscretizeAdapterPois::tick()
     for (int i = 0; i < port_out->data_size; ++i){
         double tmp_ = 0;
         double int_mult = 0;
-    
+        int bor_temp = 0;
+        int t = 0;
         // calculate distance to this place cell 
 
-        if (representation_type == "place"){
-            // std::cout << "place\n";
+        if (rep_type[i] == 0){ //place
+//            std::cout << "place\n";
             for (int j = 0; j < port_in->data_size; ++j){
                 tmp_ += std::pow((port_in->data[j] - grid_positions[i][j]) / sigmas[i][j], 2);
             }
+            t = 1;
         }
-        else if (representation_type == "grid"){
-            // std::cout << "grid\n";
+        else if (rep_type[i] == 1){ //grid
+//            std::cout << "grid\n";
             for (int hex_axis = 0; hex_axis < 3; hex_axis++){
                 phi_l = -PI/6 + hex_axis*PI/3;
                 omega = 2*PI/(sin(PI/3)*sigmas[i][0]);
@@ -91,13 +93,26 @@ DiscretizeAdapterPois::tick()
                 tmp_ += cos(omega*int_mult) - 1;
             }
             tmp_ = -tmp_*sigmas[i][1]/1.5;
+            t = 1;
+        }
+        else if (rep_type[i] == 2){ //border
+//            std::cout << "border\n";
+            for (int j = 0; j < port_in->data_size; ++j){
+                if(grid_positions[i][j]-sigmas[i][j]<=port_in->data[j] && grid_positions[i][j]+sigmas[i][j]>=port_in->data[j] ){
+                    bor_temp += 1;
+                }
+            if (bor_temp == port_in->data_size){
+                tmp_ = 0;
+                t = 1;
+                }
+            }
         }
        
         // calculate activation in respect to gaussion kernel
         // port_out->data[i] = -1. + 2. * std::exp(-tmp_/2.);
 
         // modifying maximum firing rate to fit it into the spiking network
-        fr_prob_tmp = firing_rate_parameter * timestep * std::exp(-tmp_/2.);
+        fr_prob_tmp = max_fr[i] * timestep * std::exp(-tmp_/2.)*t;
 
         // << port_in->data[0] << "\t" \
         //            << port_in->data[1] << "\t" \
@@ -188,9 +203,13 @@ DiscretizeAdapterPois::readGridPositionFile()
     }
     else
     {
-
+        rep_type = new int[port_out->data_size];
+        max_fr = new float[port_out->data_size];
         for (int i = 0; i < port_out->data_size; ++i)
         {
+            rep_type[i] = json_grid_positions[i][4].asInt();
+            max_fr[i] = json_grid_positions[i][5].asFloat();
+            
             double* pos_ = new double[port_in->data_size];
             double* sigmas_ = new double[port_in->data_size];
 

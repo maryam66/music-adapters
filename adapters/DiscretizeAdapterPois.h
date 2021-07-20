@@ -56,7 +56,8 @@ class DiscretizeAdapterPois : public Adapter
         Json::Value json_grid_positions; 
         std::map<int, double*> grid_positions;
         std::map<int, double*> sigmas;
-
+        int *rep_type;
+        float *max_fr; 
         void readGridPositionFile();
         void readSeedfromNetParams();
         void readParams();
