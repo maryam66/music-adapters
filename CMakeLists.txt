@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-
+NiloofarAdd
 project(music-adapter CXX C)
 
 # add modules for finding JSONCPP, ZMQ and MUSIC
@@ -17,7 +17,7 @@ include_directories(
     ${MPI_INCLUDE_PATH}
     ${ZMQ_INCLUDE_DIRS}
 )
-
+samira salam
 
 set(CMAKE_CXX_COMPILE_FLAGS ${CMAKE_CXX_COMPILE_FLAGS} ${MPI_COMPILE_FLAGS})
 set(CMAKE_CXX_LINK_FLAGS ${CMAKE_CXX_LINK_FLAGS} ${MPI_LINK_FLAGS})
