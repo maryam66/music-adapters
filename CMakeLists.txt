@@ -22,7 +22,7 @@ samira salam
 set(CMAKE_CXX_COMPILE_FLAGS ${CMAKE_CXX_COMPILE_FLAGS} ${MPI_COMPILE_FLAGS})
 set(CMAKE_CXX_LINK_FLAGS ${CMAKE_CXX_LINK_FLAGS} ${MPI_LINK_FLAGS})
 set(CMAKE_CXX_FLAGS "-O3 -g -Wall")
-
+Niloofar chikar mikoni
 find_library(GSL gsl REQUIRED)
 find_library(BLAS gslcblas REQUIRED)
 find_library(PTHREAD pthread REQUIRED)
