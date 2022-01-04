@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 NiloofarAdd
 project(music-adapter CXX C)
-
+testing pulll
 # add modules for finding JSONCPP, ZMQ and MUSIC
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
